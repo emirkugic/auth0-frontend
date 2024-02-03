@@ -1,0 +1,32 @@
+.app-bar {
+  background-color: white;
+  width: 100%;
+  color: black;
+}
+
+.app-bar__content {
+  padding-left: 5rem;
+  padding-right: 5rem;
+  width: 100%;
+}
+
+.app-bar__logo {
+  color: black;
+}
+
+.app-bar__logo img {
+  height: 1.5rem;
+}
+
+.app-bar__avatar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+}
+
+.app-bar__avatar__title {
+  margin-left: 1rem;
+  font-family: Roboto;
+  font-weight: 500;
+}

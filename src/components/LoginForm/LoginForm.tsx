@@ -1,29 +1,24 @@
 import { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
   CardContent,
   CardActions,
   Button,
-  FormControl,
   InputAdornment,
   IconButton,
-  FormHelperText,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
-  CustomTextField,
-  CustomOutlinedInputField,
-  CustomLabelForField,
-} from "../../UI";
+import { CustomTextField } from "../../UI";
 import { LoginFormProps } from "../../types";
 
 import classes from "./LoginForm.module.css";
 
 const LoginForm: FC<LoginFormProps> = ({ formType }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const validationSchema = yup.object({
     email: yup
@@ -41,6 +36,7 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log("Form submitted with values:", values);
+      navigate("/");
     },
   });
 

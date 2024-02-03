@@ -5,19 +5,13 @@ import {
   CardContent,
   CardActions,
   Button,
-  FormControl,
   Grid,
   InputAdornment,
   IconButton,
-  FormHelperText,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
-  CustomTextField,
-  CustomOutlinedInputField,
-  CustomLabelForField,
-} from "../../UI";
+import { CustomTextField } from "../../UI";
 import { RegisterFormProps } from "../../types";
 
 import classes from "./RegisterForm.module.css";

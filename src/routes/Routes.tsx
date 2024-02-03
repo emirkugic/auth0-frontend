@@ -5,7 +5,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { AuthenticationForm } from "../components/AuthenticationForm";
+import { AuthenticationForm } from "../views/AuthenticationForm";
+import { Dashboard } from "../views/Dashboard";
 
 const Routes = () => {
   const routerConfig: RouteObject[] = [
@@ -15,7 +16,7 @@ const Routes = () => {
     },
     {
       path: "/",
-      element: <h1>Home</h1>,
+      element: <Dashboard />,
     },
     {
       path: "/forgot-password",
