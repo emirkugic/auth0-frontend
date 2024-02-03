@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.card__content__grid {
+  margin-bottom: 1rem;
+}
+
 .card__content__text-field {
   margin-bottom: 1rem;
 }
@@ -23,16 +27,4 @@
 .card__actions__button:hover {
   background-color: #a62c2c;
   border-color: #a62c2c;
-}
-
-.card__content__link {
-  display: flex;
-  justify-content: flex-end;
-  text-decoration: none;
-  color: black;
-}
-
-.card__content__link:hover {
-  color: black;
-  text-decoration: underline;
 }

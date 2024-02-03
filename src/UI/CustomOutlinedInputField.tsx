@@ -16,10 +16,7 @@ const CustomOutlinedInputField = styled(OutlinedInput)({
     color: "black",
   },
   "& .MuiOutlinedInput-notchedOutline": {},
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "black",
-    borderWidth: "1.5px",
-  },
+
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "black",
     borderWidth: "2px",

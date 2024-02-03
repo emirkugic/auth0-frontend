@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Box } from "@mui/material";
 import classes from "./CustomSwitch.module.css";
 
-const CustomSwitch = () => {
+const CustomSwitch = ({
+  onFormTypeChange,
+}: {
+  onFormTypeChange: Dispatch<SetStateAction<"login" | "register">>;
+}) => {
   const [isLoginActive, setLoginActive] = useState(true);
 
   const handleClick = () => {
     setLoginActive(!isLoginActive);
+
+    onFormTypeChange(isLoginActive ? "register" : "login");
   };
 
   return (

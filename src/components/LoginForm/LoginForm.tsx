@@ -1,26 +1,48 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import { Box, FormControl } from "@mui/material";
+import { FC, useState } from "react";
+import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import {
+  CardContent,
+  CardActions,
+  Button,
+  FormControl,
+  InputAdornment,
+  IconButton,
+  FormHelperText,
+} from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-
-import { useState } from "react";
-
 import {
-  CustomSwitch,
   CustomTextField,
   CustomOutlinedInputField,
   CustomLabelForField,
 } from "../../UI";
-import auth0Logo from "../../assets/logos/authLogo/auth0-dark.svg";
+import { LoginFormProps } from "../../types";
+
 import classes from "./LoginForm.module.css";
 
-const LoginForm = () => {
+const LoginForm: FC<LoginFormProps> = ({ formType }) => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const validationSchema = yup.object({
+    email: yup
+      .string()
+      .email("Invalid email address")
+      .required("Invalid credentials"),
+    password: yup.string().required("Invalid credentials."),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log("Form submitted with values:", values);
+    },
+  });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -31,29 +53,27 @@ const LoginForm = () => {
   };
 
   return (
-    <Card className={classes.card}>
-      <Box className={classes["card__logo-container"]}>
-        <img src={auth0Logo} alt="Skim Technologies" />
-      </Box>
-
-      <Box className={classes["card__switch"]}>
-        <CustomSwitch />
-      </Box>
-
+    <form onSubmit={formik.handleSubmit}>
       <CardContent className={classes["card__content"]}>
         <CustomTextField
           id="email"
+          name="email"
           label="Your Skim Email"
           variant="outlined"
           className={classes["card__content__text-field"]}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
         />
-        <FormControl variant="outlined">
-          <CustomLabelForField htmlFor="password">Password</CustomLabelForField>
-          <CustomOutlinedInputField
-            id="password"
-            className={classes["card__content__text-field"]}
-            type={showPassword ? "text" : "password"}
-            endAdornment={
+        <CustomTextField
+          id="password"
+          name="password"
+          className={classes["card__content__text-field"]}
+          type={showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
@@ -64,17 +84,29 @@ const LoginForm = () => {
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+            ),
+          }}
+          label="Password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <Link to="/forgot-password" className={classes["card__content__link"]}>
+          Forgot Password?
+        </Link>
       </CardContent>
       <CardActions className={classes["card__actions"]}>
-        <Button size="large" className={classes["card__actions__button"]}>
-          Login
+        <Button
+          type="submit"
+          size="large"
+          className={classes["card__actions__button"]}
+        >
+          {formType === "login" ? "Login" : "Register"}
         </Button>
       </CardActions>
-    </Card>
+    </form>
   );
 };
 

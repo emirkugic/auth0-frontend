@@ -5,17 +5,21 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { LoginForm } from "../components/LoginForm";
+import { AuthenticationForm } from "../components/AuthenticationForm";
 
 const Routes = () => {
   const routerConfig: RouteObject[] = [
     {
       path: "/login",
-      element: <LoginForm />,
+      element: <AuthenticationForm />,
     },
     {
       path: "/",
       element: <h1>Home</h1>,
+    },
+    {
+      path: "/forgot-password",
+      element: <h1>Forgot Password</h1>,
     },
     {
       path: "*",
