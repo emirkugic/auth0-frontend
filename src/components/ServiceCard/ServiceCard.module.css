@@ -1,0 +1,49 @@
+.card {
+  position: relative;
+  overflow: visible;
+  align-items: center;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.image {
+  width: 65%;
+  height: 70%;
+  object-fit: contain;
+  transform-origin: center bottom;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+.overlay {
+  font-family: Inter;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  width: 100%;
+  color: #212121;
+  text-align: center;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.card:hover .image {
+  transform: translateY(-45px);
+  z-index: 2;
+}
