@@ -12,7 +12,7 @@ const AuthenticationForm = () => {
   const [formType, setFormType] = useState<"login" | "register">("login");
 
   return (
-    <>
+    <Box className={classes.container}>
       <Card className={classes.card}>
         <Box className={classes["card__logo-container"]}>
           <img src={auth0Logo} alt="Skim Technologies" />
@@ -32,7 +32,7 @@ const AuthenticationForm = () => {
       <Box className={classes.logo}>
         <img src={poweredBySkim} alt="Powered By Skim Technologies" />
       </Box>
-    </>
+    </Box>
   );
 };
 
