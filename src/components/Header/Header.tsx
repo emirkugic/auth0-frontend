@@ -27,7 +27,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" className={classes["app-bar"]}>
+    <AppBar position="static" elevation={1} className={classes["app-bar"]}>
       <Container
         className={classes["app-bar__content"]}
         maxWidth={false}
