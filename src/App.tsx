@@ -1,8 +1,14 @@
+import { useSnackbar } from "./hooks";
 import { Routes } from "./routes";
 import "@fontsource/roboto/500.css";
 
 const App = () => {
-  return <Routes />;
+  const { SnackbarComponent } = useSnackbar();
+
+  return <>
+    {SnackbarComponent}
+    <Routes />;
+  </>
 };
 
 export default App;

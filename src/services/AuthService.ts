@@ -29,10 +29,7 @@ const login = async (
 
 const register = async (registerData: User) => {
     try {
-        await axiosInstance.post('/auth/register', {
-            email: registerData.email,
-            password: registerData.password
-        });
+        await axiosInstance.post('/auth/register', registerData);
 
         return Promise.resolve();
     } catch (error: any) {

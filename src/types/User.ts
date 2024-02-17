@@ -3,8 +3,8 @@ type User = {
     lastName?: string;
     email: string;
     password: string;
-    dateOfBirth?: string;
-    authToken?: string;
+    dateOfBirth?: string | null;
+    authKey?: string;
 };
 
 export default User;

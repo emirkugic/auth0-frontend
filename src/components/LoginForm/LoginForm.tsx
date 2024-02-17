@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -18,11 +18,12 @@ import { AuthFormType } from "../../enums";
 import classes from "./LoginForm.module.css";
 import { ReduxHooks } from "../../hooks";
 import { AuthAction } from "../../store";
+import useSnackbar from "../../hooks/useSnackbar";
 
 const LoginForm: FC<LoginFormProps> = ({ formType }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { showSnackbar } = useSnackbar()
   const dispatch = ReduxHooks.useAppDispatch();
-  const navigate = useNavigate();
 
   const validationSchema = yup.object({
     email: yup
@@ -40,6 +41,8 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(AuthAction.login(values));
+      formik.resetForm();
+      showSnackbar("Logged in successfully", "success");
     },
   });
 
@@ -101,6 +104,7 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
           type="submit"
           size="large"
           className={classes["card__actions__button"]}
+          disabled={Object.keys(formik.errors).length > 0}
         >
           {formType === AuthFormType.LOGIN ? "Login" : "Register"}
         </Button>

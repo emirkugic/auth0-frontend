@@ -12,7 +12,6 @@ import { ProtectedRouteProps } from "../types";
 import ProtectedRoute from "./ProtectedRoute";
 import { ReduxHooks } from "../hooks";
 
-
 const Routes = () => {
   const isAuthenticated = ReduxHooks.useAppSelector(selectIsAuthenticated);
 
