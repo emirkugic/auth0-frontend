@@ -11,8 +11,8 @@ const DarkModeWrapper: FC<DarkModeWrapperProps> = ({ children }) => {
 
     if (iconElement && iconElement instanceof HTMLLinkElement) {
       iconElement.href = isDarkMode
-        ? "/public/auth0-light.svg"
-        : "/public/auth0-dark.svg";
+        ? "auth0-light.svg"
+        : "auth0-dark.svg";
     } else {
       console.error("Icon element not found or not of type HTMLLinkElement.");
     }
@@ -32,7 +32,7 @@ const DarkModeWrapper: FC<DarkModeWrapperProps> = ({ children }) => {
     updateIcon();
 
     return () => darkModeMediaQuery.removeEventListener("change", handleChange);
-  }, [handleChange, updateIcon]);
+  }, [isDarkMode]);
 
   return <>{children}</>;
 };

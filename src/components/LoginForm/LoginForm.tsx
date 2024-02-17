@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -8,12 +8,14 @@ import {
   Button,
   InputAdornment,
   IconButton,
+  TextField,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 import { CustomTextField } from "../../UI";
 import { LoginFormProps } from "../../types";
-
+import { AuthFormType } from "../../enums";
 import classes from "./LoginForm.module.css";
 
 const LoginForm: FC<LoginFormProps> = ({ formType }) => {
@@ -43,15 +45,15 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form className={classes.form} onSubmit={formik.handleSubmit}>
       <CardContent className={classes["card__content"]}>
-        <CustomTextField
+        <TextField
           id="email"
           name="email"
           label="Your Skim Email"
@@ -63,7 +65,7 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
-        <CustomTextField
+        <TextField
           id="password"
           name="password"
           className={classes["card__content__text-field"]}
@@ -99,7 +101,7 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
           size="large"
           className={classes["card__actions__button"]}
         >
-          {formType === "login" ? "Login" : "Register"}
+          {formType === AuthFormType.LOGIN ? "Login" : "Register"}
         </Button>
       </CardActions>
     </form>

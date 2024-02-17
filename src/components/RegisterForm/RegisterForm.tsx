@@ -8,10 +8,15 @@ import {
   Grid,
   InputAdornment,
   IconButton,
+  TextField,
+  Box,
+  Tooltip,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from "dayjs";
 import Visibility from "@mui/icons-material/Visibility";
+import InfoIcon from '@mui/icons-material/Info';
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { CustomTextField } from "../../UI";
 import { RegisterFormProps } from "../../types";
 
 import classes from "./RegisterForm.module.css";
@@ -20,6 +25,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showAuthKey, setShowAuthKey] = useState(false);
+  const [value, setValue] = useState<Dayjs | null>(dayjs('2024-01-01'));
 
   const validationSchema = yup.object({
     firstName: yup.string().required("First Name is required"),
@@ -69,12 +75,18 @@ const RegisterForm: FC<RegisterFormProps> = () => {
     event.preventDefault();
   };
 
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    console.log("Form submitted with values:", formik.values);
+  };
+
   return (
-    <>
+    <form className={classes.form} onSubmit={onSubmitHandler}>
       <CardContent className={classes["card__content"]}>
         <Grid container spacing={2} className={classes["card__content__grid"]}>
           <Grid item xs={6}>
-            <CustomTextField
+            <TextField
               id="firstName"
               name="firstName"
               label="First Name"
@@ -90,7 +102,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
             />
           </Grid>
           <Grid item xs={6}>
-            <CustomTextField
+            <TextField
               id="lastName"
               name="lastName"
               label="Last Name"
@@ -104,7 +116,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
             />
           </Grid>
         </Grid>
-        <CustomTextField
+        <TextField
           id="email"
           name="email"
           label="Your Skim Email"
@@ -116,7 +128,14 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
-        <CustomTextField
+        <DatePicker
+          label="Date of Birth"
+          className={classes["card__content__text-field"]}
+          views={["day", "month", "year"]}
+          value={value}
+          onChange={(newValue) => setValue(newValue)}
+        />
+        <TextField
           id="password"
           name="password"
           className={classes["card__content__text-field"]}
@@ -142,7 +161,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <CustomTextField
+        <TextField
           id="confirmPassword"
           name="confirmPassword"
           className={classes["card__content__text-field"]}
@@ -173,7 +192,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
             formik.touched.confirmPassword && formik.errors.confirmPassword
           }
         />
-        <CustomTextField
+        <TextField
           id="authKey"
           name="authKey"
           className={classes["card__content__text-field"]}
@@ -181,14 +200,21 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowAuthKey}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showAuthKey ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
+                <Box>
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowAuthKey}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showAuthKey ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                  <IconButton>
+                    <Tooltip title="Registration key provided by SKIM">
+                      <InfoIcon />
+                    </Tooltip>
+                  </IconButton>
+                </Box>
               </InputAdornment>
             ),
           }}
@@ -209,7 +235,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           Register
         </Button>
       </CardActions>
-    </>
+    </form>
   );
 };
 

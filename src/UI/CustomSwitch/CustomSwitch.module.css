@@ -5,7 +5,7 @@
   width: 11rem;
   height: 2.5rem;
   overflow: hidden;
-  border: 2px solid #bdbdbd;
+  border: 2px solid lightgray;
   border-radius: 50px;
 }
 
@@ -15,7 +15,7 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background-color: #b73131;
+  background-color: var(--primary-color-500);
   transition: transform 0.3s ease-in-out;
   border-radius: 50px;
 }
@@ -27,24 +27,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Inter";
+  font-family: Inter;
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
 }
 
 .switch__login {
-  color: #c2c2c2;
+  color: lightgray;
 }
 
 .switch__register {
-  color: #c2c2c2;
+  color: lightgray;
 }
 
 .switch__button.active {
-  color: #fff;
+  color: white;
 }
 
 .switch__button.inactive {
-  color: #c2c2c2;
+  color: lightgray;
 }

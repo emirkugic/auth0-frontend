@@ -6,7 +6,25 @@
   color-scheme: light dark;
 
   color: #212121;
-  background: linear-gradient(90deg, #f0f0f0 0%, #ffffff 100%);
+
+  background-color: whitesmoke;
+
+  --primary-color-900: #293F8C;
+  --primary-color-700: #3E5DCC;
+  --primary-color-500: #4D72F6;
+  --primary-color-300: #90A9FF;
+  --primary-color-100: #E0E7FF;
+
+  --secondary-color-900: #000000;
+  --secondary-color-700: #555555;
+  --secondary-color-500: #848484;
+  --secondary-color-300: #CECECE;
+  --secondary-color-100: #FFFFFF;
+
+  --warning-color: #F69C32;
+  --error-color: #DB2424;
+  --success-color: #35C333;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

@@ -1,15 +1,17 @@
 import Card from "@mui/material/Card";
 import { Box } from "@mui/material";
 import { useState } from "react";
+
 import { CustomSwitch } from "../../UI";
 import { LoginForm } from "../../components/LoginForm";
 import { RegisterForm } from "../../components/RegisterForm";
 import auth0Logo from "../../assets/logos/authLogo/auth0-dark.svg";
 import poweredBySkim from "../../assets/logos/PoweredBy.svg";
+import { AuthFormType } from "../../enums";
 import classes from "./AuthenticationForm.module.css";
 
 const AuthenticationForm = () => {
-  const [formType, setFormType] = useState<"login" | "register">("login");
+  const [formType, setFormType] = useState<AuthFormType.LOGIN | AuthFormType.REGISTER>(AuthFormType.LOGIN);
 
   return (
     <Box className={classes.container}>
@@ -22,7 +24,7 @@ const AuthenticationForm = () => {
           <CustomSwitch onFormTypeChange={setFormType} />
         </Box>
 
-        {formType === "login" ? (
+        {formType === AuthFormType.LOGIN ? (
           <LoginForm formType={formType} />
         ) : (
           <RegisterForm formType={formType} />
