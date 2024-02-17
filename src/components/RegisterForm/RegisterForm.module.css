@@ -1,3 +1,7 @@
+.form {
+   width: 30rem;
+}
+
 .card__content {
   display: flex;
   flex-direction: column;
@@ -17,14 +21,14 @@
 
 .card__actions__button {
   width: 100%;
-  background-color: #b73131;
-  border-color: #b73131;
+  background-color: var(--primary-color-500);
+  border-color: var(--primary-color-500);
   color: white;
   font-family: Inter;
   font-weight: 700;
 }
 
 .card__actions__button:hover {
-  background-color: #a62c2c;
-  border-color: #a62c2c;
+  background-color: var(--primary-color-700);
+  border-color: var(--primary-color-700);
 }
