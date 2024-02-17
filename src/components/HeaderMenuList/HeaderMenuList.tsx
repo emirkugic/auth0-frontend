@@ -4,13 +4,24 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { MouseEvent } from 'react';
 
+import { ReduxHooks, useSnackbar } from '../../hooks';
 import classes from "./HeaderMenuList.module.css"
+import { AuthAction } from '../../store';
 
-const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLDivElement>) => void }) => {
+const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLLIElement>) => void }) => {
+    const dispatch = ReduxHooks.useAppDispatch()
+    const { showSnackbar } = useSnackbar()
+
+    const handleLogout = () => {
+        dispatch(AuthAction.logout())
+
+        showSnackbar("Logged out successfully", "success")
+    }
+
     return (
         <MenuList>
-            <MenuItem className={classes.item}>
-                <ListItemIcon onClick={handleProfileClick}>
+            <MenuItem className={classes.item} onClick={handleProfileClick}>
+                <ListItemIcon>
                     <PersonOutlineIcon />
                 </ListItemIcon>
                 <ListItemText>
@@ -25,7 +36,7 @@ const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: Mo
                     Admin Panel
                 </ListItemText>
             </MenuItem>
-            <MenuItem className={classes.item}>
+            <MenuItem className={classes.item} onClick={handleLogout}>
                 <ListItemIcon>
                     <LogoutIcon />
                 </ListItemIcon>

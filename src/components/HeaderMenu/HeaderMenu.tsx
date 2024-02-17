@@ -1,11 +1,15 @@
-import { Menu } from '@mui/material';
+import { HeaderMenuList } from '../HeaderMenuList';
 import { HeaderMenuProps } from '../../types';
 import classes from "./HeaderMenu.module.css"
-import { HeaderMenuList } from '../HeaderMenuList';
+import { Menu } from '@mui/material';
+import { useState } from 'react';
+import { ProfileMenu } from '../ProfileMenu';
 
 const HeaderMenu = ({ anchorEl, open, handleClose }: HeaderMenuProps) => {
+    const [isProfile, setIsProfile] = useState(false)
 
     const handleProfileClick = () => {
+        setIsProfile(prevstate => !prevstate)
     }
 
     return (
@@ -23,7 +27,10 @@ const HeaderMenu = ({ anchorEl, open, handleClose }: HeaderMenuProps) => {
                 horizontal: 'right',
             }}
         >
-            <HeaderMenuList handleProfileClick={handleProfileClick} />
+            {isProfile
+                ? <ProfileMenu handleProfileClick={handleProfileClick} />
+                : <HeaderMenuList handleProfileClick={handleProfileClick} />
+            }
         </Menu>
     )
 }

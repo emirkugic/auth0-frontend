@@ -1,8 +1,10 @@
-const ProfileMenu = () => {
-    return (
-        <div>
+import { MouseEvent } from "react";
 
-        </div>
+const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLButtonElement>) => void }) => {
+    return (
+        <button onClick={handleProfileClick}>
+            Profile
+        </button>
     )
 }
 

@@ -29,7 +29,7 @@ const login = async (
 
 const register = async (registerData: User) => {
     try {
-        await axiosInstance.post('/auth/register', registerData);
+        await axiosInstance.post('auth/register', registerData);
 
         return Promise.resolve();
     } catch (error: any) {
@@ -39,4 +39,20 @@ const register = async (registerData: User) => {
     }
 };
 
-export default { login, register };
+const logout = async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
+    try {
+        await axiosInstance.post('auth/logout');
+
+        dispatch(setIsAuthenticated(false));
+
+        dispatch(setTokens({ access_token: null, refreshToken: null }));
+
+        return Promise.resolve()
+    } catch (error: any) {
+        console.error('Logout Error', error);
+        const errorMessage = error.response?.data?.statusText || 'Logout failed.';
+        return Promise.reject(errorMessage);
+    }
+}
+
+export default { login, register, logout };
