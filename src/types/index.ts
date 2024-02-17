@@ -1,4 +1,8 @@
+export type { default as ReactQueryWrapperProps } from "./wrappers/ReactQueryWrapperProps";
 export type { default as DarkModeWrapperProps } from "./theme/DarkModelWrapperProps";
+export type { default as ProtectedRouteProps } from "./routes/ProtectedRouteProps";
+export type { default as ReduxWrapperProps } from "./wrappers/ReduxWrapperProps";
+export type { default as AppThunkDispatch } from "./store/AppThunkDispatch";
 export type { default as RegisterFormProps } from "./forms/FormProps";
 export type { default as LoginFormProps } from "./forms/FormProps";
 export type { default as AuthState } from "./store/AuthState";

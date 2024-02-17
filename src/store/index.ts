@@ -6,3 +6,4 @@ export {
     setIsAuthenticated,
     setTokens
 } from "./slice/authSlice";
+export { default as AuthAction } from "./action/authAction";

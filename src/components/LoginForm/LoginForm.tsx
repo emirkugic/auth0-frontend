@@ -13,13 +13,15 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import { CustomTextField } from "../../UI";
 import { LoginFormProps } from "../../types";
 import { AuthFormType } from "../../enums";
 import classes from "./LoginForm.module.css";
+import { ReduxHooks } from "../../hooks";
+import { AuthAction } from "../../store";
 
 const LoginForm: FC<LoginFormProps> = ({ formType }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = ReduxHooks.useAppDispatch();
   const navigate = useNavigate();
 
   const validationSchema = yup.object({
@@ -37,8 +39,7 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("Form submitted with values:", values);
-      navigate("/");
+      dispatch(AuthAction.login(values));
     },
   });
 

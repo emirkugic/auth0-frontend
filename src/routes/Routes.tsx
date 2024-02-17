@@ -6,17 +6,29 @@ import {
 } from "react-router-dom";
 
 import { AuthenticationForm } from "../views/AuthenticationForm";
+import { selectIsAuthenticated } from "../store";
 import { Dashboard } from "../views/Dashboard";
+import { ProtectedRouteProps } from "../types";
+import ProtectedRoute from "./ProtectedRoute";
+import { ReduxHooks } from "../hooks";
+
 
 const Routes = () => {
+  const isAuthenticated = ReduxHooks.useAppSelector(selectIsAuthenticated);
+
+  const defaultProtectedRouteProps: Omit<ProtectedRouteProps, 'outlet'> = {
+    isAuthenticated,
+    authenticationPath: '/login',
+  };
+
   const routerConfig: RouteObject[] = [
     {
       path: "/login",
-      element: <AuthenticationForm />,
+      element: !isAuthenticated ? <AuthenticationForm /> : <Navigate to="/" />,
     },
     {
       path: "/",
-      element: <Dashboard />,
+      element: <ProtectedRoute {...defaultProtectedRouteProps} outlet={<Dashboard />} />,
     },
     {
       path: "/forgot-password",
