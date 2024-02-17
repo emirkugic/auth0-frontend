@@ -1,0 +1,50 @@
+.switch {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 11rem;
+  height: 2.5rem;
+  overflow: hidden;
+  border: 2px solid lightgray;
+  border-radius: 50px;
+}
+
+.switch__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: var(--primary-color-500);
+  transition: transform 0.3s ease-in-out;
+  border-radius: 50px;
+}
+
+.switch__button {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.switch__login {
+  color: lightgray;
+}
+
+.switch__register {
+  color: lightgray;
+}
+
+.switch__button.active {
+  color: white;
+}
+
+.switch__button.inactive {
+  color: lightgray;
+}

@@ -1,0 +1,24 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.container__action {
+  margin-left: 1rem;
+  color: whitesmoke;
+  background-color: #212121;
+}
+
+.container__action__logo {
+  font-size: 2.5rem;
+}
+
+.subtask {
+  margin-left: 2rem;
+}

@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  padding: 32px;
+  min-width: 20vw;
+  margin-top: 8vh;
+  box-shadow: 0 2px 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.card__logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.card__logo-container img {
+  width: 11rem;
+}
+
+.card__switch {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-top: 5vh;
+}
+
+.logo img {
+  width: 7rem;
+}

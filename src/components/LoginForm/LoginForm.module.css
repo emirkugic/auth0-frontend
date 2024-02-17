@@ -1,0 +1,42 @@
+.form {
+  width: 30rem;
+}
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.card__content__text-field {
+  margin-bottom: 1rem;
+}
+
+.card__actions {
+  justify-content: center;
+}
+
+.card__actions__button {
+  width: 100%;
+  background-color: var(--primary-color-500);
+  border-color: var(--primary-color-500);
+  color: white;
+  font-family: Inter;
+  font-weight: 700;
+}
+
+.card__actions__button:hover {
+  background-color: var(--primary-color-700);
+  border-color: var(--primary-color-700);
+}
+
+.card__content__link {
+  display: flex;
+  justify-content: flex-end;
+  text-decoration: none;
+  color: black;
+}
+
+.card__content__link:hover {
+  color: black;
+  text-decoration: underline;
+}
