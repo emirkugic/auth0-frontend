@@ -12,7 +12,7 @@
 .container__action {
   margin-left: 1rem;
   color: whitesmoke;
-  background-color: #212121;
+  background-color: var(--primary-color-900);
 }
 
 .container__action__logo {

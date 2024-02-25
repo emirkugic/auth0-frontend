@@ -29,7 +29,7 @@ const login = async (
 
 const register = async (registerData: User) => {
     try {
-        await axiosInstance.post('/auth/register', registerData);
+        await axiosInstance.post('auth/register', registerData);
 
         return Promise.resolve();
     } catch (error: any) {
@@ -39,4 +39,41 @@ const register = async (registerData: User) => {
     }
 };
 
-export default { login, register };
+const logout = async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
+    try {
+        await axiosInstance.post('auth/logout');
+
+        dispatch(setIsAuthenticated(false));
+
+        dispatch(setTokens({ access_token: null, refreshToken: null }));
+
+        return Promise.resolve()
+    } catch (error: any) {
+        console.error('Logout Error', error);
+        const errorMessage = error.response?.data?.statusText || 'Logout failed.';
+        return Promise.reject(errorMessage);
+    }
+}
+
+const validateToken = async (accessToken: string | null) => {
+    try {
+        if (accessToken) {
+            const response = await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            if (response.data.message === true) {
+                return true;
+            }
+        }
+        return false;
+    } catch (error) {
+        console.error('Token validation failed:', error);
+        return false;
+    }
+};
+
+
+export default { login, register, logout, validateToken };

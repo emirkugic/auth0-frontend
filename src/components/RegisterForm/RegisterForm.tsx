@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -11,6 +11,7 @@ import {
   TextField,
   Box,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import { format } from 'date-fns';
 import { DatePicker } from "@mui/x-date-pickers";
@@ -18,17 +19,16 @@ import Visibility from "@mui/icons-material/Visibility";
 import InfoIcon from '@mui/icons-material/Info';
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import { RegisterFormProps } from "../../types";
 import { ReduxHooks, useSnackbar } from "../../hooks";
+import { AuthAction } from "../../store";
 
 import classes from "./RegisterForm.module.css";
-import { AuthAction } from "../../store";
-import { triggerReload } from "../../utils";
 
-const RegisterForm: FC<RegisterFormProps> = () => {
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showAuthKey, setShowAuthKey] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = ReduxHooks.useAppDispatch();
   const { showSnackbar } = useSnackbar();
@@ -70,6 +70,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       const formattedDateOfBirth = values.dateOfBirth?.["$d"] ? format(values.dateOfBirth["$d"], 'yyyy-MM-dd') : null;
 
       const formattedValues = {
@@ -81,11 +82,13 @@ const RegisterForm: FC<RegisterFormProps> = () => {
       };
 
       dispatch(AuthAction.register(formattedValues));
+      setIsLoading(false);
       formik.resetForm();
-      //triggerReload();
       showSnackbar("Registered successfully, Please log in", "success");
     },
   });
+
+  const isFormTouched = Object.entries(formik.touched).some(([, value]) => value);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -256,9 +259,12 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           type="submit"
           size="large"
           className={classes["card__actions__button"]}
-          disabled={Object.keys(formik.errors).length > 0}
+          disabled={!isFormTouched || isLoading || Object.keys(formik.errors).length > 0}
         >
-          Register
+          {isLoading
+            ? <CircularProgress size={24} color="inherit" />
+            : "Register"
+          }
         </Button>
       </CardActions>
     </form>
