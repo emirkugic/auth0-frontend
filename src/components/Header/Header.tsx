@@ -1,6 +1,3 @@
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";

@@ -55,4 +55,21 @@ const logout = async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
     }
 }
 
-export default { login, register, logout };
+const validateToken = async (accessToken: string | null) => {
+    try {
+        if (accessToken) {
+            await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error('Token validation failed:', error);
+        return false;
+    }
+};
+
+export default { login, register, logout, validateToken };

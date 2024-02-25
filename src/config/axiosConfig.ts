@@ -1,5 +1,7 @@
-import { selectAccessToken, selectRefreshToken, store } from "../store";
-import axios from "axios";
+import axios from 'axios';
+
+import { selectAccessToken, setIsAuthenticated, store } from '../store';
+import { AuthService } from '../services';
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_BE_BASE_URL,
@@ -7,15 +9,30 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-    (config) => {
-        const token = selectAccessToken(store.getState());
-        const refreshToken = selectRefreshToken(store.getState());
-        token
-            ? config.headers['Authorization'] = `Bearer ${token}`
-            : delete config.headers['Authorization'];
-        refreshToken
-            ? (config.headers['Refresh-Token'] = refreshToken)
-            : delete config.headers['Refresh-Token'];
+    async (config) => {
+        const accessToken = selectAccessToken(store.getState());
+
+        if (accessToken) {
+            try {
+                const isValidToken = await AuthService.validateToken(accessToken);
+
+                console.log('isValidToken:', isValidToken)
+
+                if (!isValidToken) {
+                    throw new Error('Token is invalid');
+                }
+
+                store.dispatch(setIsAuthenticated(true));
+                config.headers['Authorization'] = `Bearer ${accessToken}`;
+            } catch (error) {
+                store.dispatch(setIsAuthenticated(false));
+                console.error('Token validation failed:', error);
+                throw error;
+            }
+        } else {
+            store.dispatch(setIsAuthenticated(false));
+            delete config.headers['Authorization'];
+        }
 
         return config;
     },
