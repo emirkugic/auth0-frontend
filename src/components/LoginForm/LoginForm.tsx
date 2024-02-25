@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent } from "react";
+import { useState, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -9,28 +9,25 @@ import {
   InputAdornment,
   IconButton,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import { LoginFormProps } from "../../types";
-import { AuthFormType } from "../../enums";
 import classes from "./LoginForm.module.css";
 import { ReduxHooks } from "../../hooks";
 import { AuthAction } from "../../store";
 import useSnackbar from "../../hooks/useSnackbar";
 
-const LoginForm: FC<LoginFormProps> = ({ formType }) => {
+const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { showSnackbar } = useSnackbar()
+  const [isLoading, setIsLoading] = useState(false);
+  const { showSnackbar } = useSnackbar();
   const dispatch = ReduxHooks.useAppDispatch();
 
   const validationSchema = yup.object({
-    email: yup
-      .string()
-      .email("Invalid email address")
-      .required("Invalid credentials"),
-    password: yup.string().required("Invalid credentials."),
+    email: yup.string().email("Invalid email address").required("Email is required"),
+    password: yup.string().required("Password is required"),
   });
 
   const formik = useFormik({
@@ -40,17 +37,19 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       dispatch(AuthAction.login(values));
+      setIsLoading(false);
       formik.resetForm();
       showSnackbar("Logged in successfully", "success");
     },
   });
 
+  const isFormTouched = Object.entries(formik.touched).some(([, value]) => value);
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (
-    event: MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
@@ -104,9 +103,9 @@ const LoginForm: FC<LoginFormProps> = ({ formType }) => {
           type="submit"
           size="large"
           className={classes["card__actions__button"]}
-          disabled={Object.keys(formik.errors).length > 0}
+          disabled={!isFormTouched || isLoading || Object.keys(formik.errors).length > 0}
         >
-          {formType === AuthFormType.LOGIN ? "Login" : "Register"}
+          {isLoading ? <CircularProgress size={24} color="inherit" /> : "Login"}
         </Button>
       </CardActions>
     </form>

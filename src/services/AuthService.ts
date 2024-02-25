@@ -58,12 +58,15 @@ const logout = async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
 const validateToken = async (accessToken: string | null) => {
     try {
         if (accessToken) {
-            await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate`, {
+            const response = await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }
             });
-            return true;
+
+            if (response.data.message === true) {
+                return true;
+            }
         }
         return false;
     } catch (error) {
@@ -71,5 +74,6 @@ const validateToken = async (accessToken: string | null) => {
         return false;
     }
 };
+
 
 export default { login, register, logout, validateToken };
