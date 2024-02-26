@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Header } from "../../components/Header";
-import { Drawer } from "../../components/Drawer";
+import { DashDrawer } from "../../components/DashDrawer";
 import { ServiceCard } from "../../components/ServiceCard";
 import classes from "./Dashboard.module.css";
 
@@ -10,7 +10,7 @@ const Dashboard = () => {
   return (
     <Box className={classes.container}>
       <Header />
-      <Drawer />
+      <DashDrawer />
       <Box className={classes["container__service-cards"]}>
         <Box className={classes["grid-container"]}>
           {[...Array(numberOfServiceCards)].map((_, index) => (

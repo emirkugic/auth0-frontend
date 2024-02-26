@@ -2,14 +2,16 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
 import { IconButton, Typography } from "@mui/material";
-import classes from "./Drawer.module.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { faList12 } from '@fortawesome/free-solid-svg-icons'
 
-export default function TemporaryDrawer() {
+import classes from "./DashDrawer.module.css";
+
+const DashDrawer = () => {
   const [state, setState] = React.useState({
     left: false,
   });
@@ -55,9 +57,8 @@ export default function TemporaryDrawer() {
         className={classes.container__action}
         onClick={() => setState({ ...state, left: true })}
       >
-        <FormatListNumberedRoundedIcon
-          className={classes.container__action__logo}
-        />
+        <FontAwesomeIcon icon={faList12 as IconProp} />
+
       </IconButton>
       <Drawer
         anchor="left"
@@ -69,3 +70,5 @@ export default function TemporaryDrawer() {
     </Box>
   );
 }
+
+export default DashDrawer;
