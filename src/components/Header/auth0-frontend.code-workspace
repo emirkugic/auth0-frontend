@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../../PHPProjects/auth0-backend"
+		}
+	],
+	"settings": {
+		"editor.defaultFormatter": "vscode.typescript-language-features",
+		"editor.formatOnSave": true,
+		"editor.formatOnPaste": true,
+		"editor.formatOnType": true,
+		"[php]": {
+			"editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+		}
+	}
+}

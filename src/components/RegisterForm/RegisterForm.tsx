@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -11,25 +11,34 @@ import {
   TextField,
   Box,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
+import { format } from 'date-fns';
 import { DatePicker } from "@mui/x-date-pickers";
-import dayjs, { Dayjs } from "dayjs";
 import Visibility from "@mui/icons-material/Visibility";
 import InfoIcon from '@mui/icons-material/Info';
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { RegisterFormProps } from "../../types";
+
+import { ReduxHooks, useSnackbar } from "../../hooks";
+import { AuthAction } from "../../store";
 
 import classes from "./RegisterForm.module.css";
 
-const RegisterForm: FC<RegisterFormProps> = () => {
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showAuthKey, setShowAuthKey] = useState(false);
-  const [value, setValue] = useState<Dayjs | null>(dayjs('2024-01-01'));
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = ReduxHooks.useAppDispatch();
+  const { showSnackbar } = useSnackbar();
 
   const validationSchema = yup.object({
     firstName: yup.string().required("First Name is required"),
     lastName: yup.string().required("Last Name is required"),
+    dateOfBirth: yup
+      .date()
+      .nullable(),
     email: yup
       .string()
       .email("Invalid email address")
@@ -54,15 +63,32 @@ const RegisterForm: FC<RegisterFormProps> = () => {
       firstName: "",
       lastName: "",
       email: "",
+      dateOfBirth: null,
       password: "",
       confirmPassword: "",
       authKey: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("Register Form submitted with values:", values);
+      setIsLoading(true);
+      const formattedDateOfBirth = values.dateOfBirth?.["$d"] ? format(values.dateOfBirth["$d"], 'yyyy-MM-dd') : null;
+
+      const formattedValues = {
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        password: values.password,
+        date_of_birth: formattedDateOfBirth,
+      };
+
+      dispatch(AuthAction.register(formattedValues));
+      setIsLoading(false);
+      formik.resetForm();
+      showSnackbar("Registered successfully, Please log in", "success");
     },
   });
+
+  const isFormTouched = Object.entries(formik.touched).some(([, value]) => value);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -75,14 +101,8 @@ const RegisterForm: FC<RegisterFormProps> = () => {
     event.preventDefault();
   };
 
-  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    console.log("Form submitted with values:", formik.values);
-  };
-
   return (
-    <form className={classes.form} onSubmit={onSubmitHandler}>
+    <form className={classes.form} onSubmit={formik.handleSubmit}>
       <CardContent className={classes["card__content"]}>
         <Grid container spacing={2} className={classes["card__content__grid"]}>
           <Grid item xs={6}>
@@ -130,10 +150,18 @@ const RegisterForm: FC<RegisterFormProps> = () => {
         />
         <DatePicker
           label="Date of Birth"
+          name="dateOfBirth"
           className={classes["card__content__text-field"]}
           views={["day", "month", "year"]}
-          value={value}
-          onChange={(newValue) => setValue(newValue)}
+          value={formik.values.dateOfBirth}
+          onChange={(date) => formik.setFieldValue("dateOfBirth", date)}
+          slotProps={{
+            textField: {
+              onBlur: formik.handleBlur,
+              error: formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth),
+              helperText: formik.touched.dateOfBirth && formik.errors.dateOfBirth,
+            },
+          }}
         />
         <TextField
           id="password"
@@ -231,8 +259,12 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           type="submit"
           size="large"
           className={classes["card__actions__button"]}
+          disabled={!isFormTouched || isLoading || Object.keys(formik.errors).length > 0}
         >
-          Register
+          {isLoading
+            ? <CircularProgress size={24} color="inherit" />
+            : "Register"
+          }
         </Button>
       </CardActions>
     </form>

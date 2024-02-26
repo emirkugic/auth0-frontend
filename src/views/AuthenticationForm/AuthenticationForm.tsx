@@ -24,11 +24,7 @@ const AuthenticationForm = () => {
           <CustomSwitch onFormTypeChange={setFormType} />
         </Box>
 
-        {formType === AuthFormType.LOGIN ? (
-          <LoginForm formType={formType} />
-        ) : (
-          <RegisterForm formType={formType} />
-        )}
+        {formType === AuthFormType.LOGIN ? <LoginForm /> : <RegisterForm />}
       </Card>
 
       <Box className={classes.logo}>

@@ -4,16 +4,11 @@ import { Action } from "redux";
 import { User, AppThunk, RootState } from "../../types";
 import { AuthService } from "../../services";
 
-const setAuthData = (
+const login = (
     loginData: User | undefined,
 ): AppThunk => {
     return async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
-        try {
-            await AuthService.setAuthData(loginData, dispatch);
-        } catch (error) {
-            console.error('Authentication Error:', error);
-            throw error;
-        }
+        await AuthService.login(loginData, dispatch);
     };
 };
 
@@ -23,4 +18,10 @@ const register = (registerData: User): AppThunk => {
     };
 };
 
-export default { setAuthData, register };
+const logout = (): AppThunk => {
+    return async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
+        await AuthService.logout(dispatch);
+    };
+};
+
+export default { login, register, logout };
