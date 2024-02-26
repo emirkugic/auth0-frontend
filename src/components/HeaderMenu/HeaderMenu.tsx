@@ -15,6 +15,7 @@ const HeaderMenu = ({ anchorEl, open, handleClose }: HeaderMenuProps) => {
     return (
         <Menu
             className={classes.menu}
+            elevation={1}
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
@@ -25,6 +26,11 @@ const HeaderMenu = ({ anchorEl, open, handleClose }: HeaderMenuProps) => {
             transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
+            }}
+            slotProps={{
+                paper: {
+                    className: classes.menu__paper
+                }
             }}
         >
             {isProfile
