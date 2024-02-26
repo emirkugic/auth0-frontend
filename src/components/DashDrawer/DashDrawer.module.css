@@ -10,10 +10,31 @@
 }
 
 .container__drawer__list {
-  width: 14rem;
+  width: 20rem;
+  height: 30vh;
+  max-height: 35vh;
   padding: 2rem; 
-  text-align: center
+  text-align: center;
+  overflow-y: auto;
 }
+
+.container__drawer__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.container__drawer__title-text {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+}
+
+.container__drawer__title-icon {
+  font-size: 1.4rem;
+}
+
 
 .container__action {
   margin-left: 3rem;
@@ -38,12 +59,12 @@
 .container__drawer {
   position: absolute;
   top: 0;
-  transform: translate(-70%, 70%);
+  transform: translate(-70%, 80%);
   transition: transform 0.3s ease-in-out; 
 }
 
 .container__drawer.open {
-  transform: translate(50%, 70%);
+  transform: translate(50%, 80%);
 }
 
 .drawer__drawer {
