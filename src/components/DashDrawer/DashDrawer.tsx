@@ -34,7 +34,7 @@ const DashDrawer = () => {
 
   const list = (
     <Box
-      sx={{ width: 250, padding: "16px", textAlign: "center" }}
+      className={classes.container__drawer__list}
       role="presentation"
       onClick={() => setOpen(false)}
       onKeyDown={() => setOpen(false)}

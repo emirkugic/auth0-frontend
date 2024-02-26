@@ -9,6 +9,12 @@
   left: 0;
 }
 
+.container__drawer__list {
+  width: 14rem;
+   padding: 2rem; 
+   text-align: center
+}
+
 .container__action {
   margin-left: 3rem;
   color: whitesmoke;
