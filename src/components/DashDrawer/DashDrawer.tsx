@@ -1,10 +1,9 @@
-import * as React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Paper, Typography } from "@mui/material";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { faList12 } from '@fortawesome/free-solid-svg-icons'
@@ -12,16 +11,33 @@ import { faList12 } from '@fortawesome/free-solid-svg-icons'
 import classes from "./DashDrawer.module.css";
 
 const DashDrawer = () => {
-  const [state, setState] = React.useState({
-    left: false,
-  });
+  const [open, setOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as HTMLElement;
+      if (
+        drawerRef.current &&
+        target &&
+        !drawerRef.current.contains(target) &&
+        !target.closest(`.${classes.container__action}`)
+      ) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const list = (
     <Box
       sx={{ width: 250, padding: "16px", textAlign: "center" }}
       role="presentation"
-      onClick={() => setState({ ...state, left: false })}
-      onKeyDown={() => setState({ ...state, left: false })}
+      onClick={() => setOpen(false)}
+      onKeyDown={() => setOpen(false)}
     >
       <Typography variant="h6" className={classes.title}>
         Completed Tasks
@@ -55,18 +71,16 @@ const DashDrawer = () => {
     <Box className={classes.container}>
       <IconButton
         className={classes.container__action}
-        onClick={() => setState({ ...state, left: true })}
+        onClick={() => setOpen(true)}
       >
         <FontAwesomeIcon icon={faList12 as IconProp} />
-
       </IconButton>
-      <Drawer
-        anchor="left"
-        open={state.left}
-        onClose={() => setState({ ...state, left: false })}
+      <Paper
+        ref={drawerRef}
+        className={`${classes.container__drawer} ${open ? classes.open : ""}`}
       >
         {list}
-      </Drawer>
+      </Paper>
     </Box>
   );
 }
