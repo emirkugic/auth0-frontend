@@ -6,7 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { IconButton, Paper, Typography } from "@mui/material";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { faList12 } from '@fortawesome/free-solid-svg-icons'
+import { faListCheck } from '@fortawesome/free-solid-svg-icons'
 
 import classes from "./DashDrawer.module.css";
 
@@ -73,7 +73,7 @@ const DashDrawer = () => {
         className={classes.container__action}
         onClick={() => setOpen(true)}
       >
-        <FontAwesomeIcon icon={faList12 as IconProp} />
+        <FontAwesomeIcon icon={faListCheck as IconProp} />
       </IconButton>
       <Paper
         ref={drawerRef}
