@@ -13,6 +13,7 @@ import classes from "./DashDrawer.module.css";
 
 const DashDrawer = () => {
   const [open, setOpen] = useState(false);
+  const [expandedAccordion, setExpandedAccordion] = useState<string | false>(false);
   const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const DashDrawer = () => {
         !target.closest(`.${classes.container__action}`)
       ) {
         setOpen(false);
+        setExpandedAccordion(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -32,6 +34,13 @@ const DashDrawer = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleAccordionChange = (panel: string) => (
+    _event: React.ChangeEvent<{}>,
+    isExpanded: boolean
+  ) => {
+    setExpandedAccordion(isExpanded ? panel : false);
+  };
 
   const list = (
     <Box
@@ -47,10 +56,16 @@ const DashDrawer = () => {
       <List>
         {[
           { text: "MS Teams", subtasks: [{ sub: "Register", isCompleted: true }, { sub: "Login", isCompleted: false }] },
-          { text: "Listify", subtasks: [{ sub: "Create Account", isCompleted: false }, { sub: "Sign In", isCompleted: true }] },
-          { text: "Workplace", subtasks: [{ sub: "Enroll", isCompleted: true }, { sub: "Authenticate", isCompleted: false }] },
+          { text: "Listify", subtasks: [{ sub: "Register", isCompleted: true }, { sub: "Login", isCompleted: false }] },
+          { text: "Workplace", subtasks: [{ sub: "Register", isCompleted: true }, { sub: "Login", isCompleted: false }] },
         ].map((task, index) => (
-          <Accordion className={classes.accordian} elevation={0} key={index}>
+          <Accordion
+            key={index}
+            className={classes.accordian}
+            elevation={0}
+            expanded={expandedAccordion === `panel${index + 1}`}
+            onChange={handleAccordionChange(`panel${index + 1}`)}
+          >
             <AccordionSummary
               expandIcon={<ArrowDropDownIcon />}
               aria-controls={`panel${index + 1}-content`}
@@ -68,7 +83,6 @@ const DashDrawer = () => {
                   >
                     <ListItemText className={classes.subtask__text} primary={`${subtask.sub}`} />
                   </ListItem>
-
                 ))}
               </List>
             </AccordionDetails>
