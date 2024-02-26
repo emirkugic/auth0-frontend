@@ -18,7 +18,10 @@ const HeaderMenu = ({ anchorEl, open, handleClose }: HeaderMenuProps) => {
             elevation={1}
             anchorEl={anchorEl}
             open={open}
-            onClose={handleClose}
+            onClose={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                handleClose(event);
+                setTimeout(() => setIsProfile(false), 300);
+            }}
             anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
