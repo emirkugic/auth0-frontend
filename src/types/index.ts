@@ -12,4 +12,5 @@ export type { default as LoginFormProps } from "./forms/FormProps";
 export type { default as AuthState } from "./store/AuthState";
 export type { default as RootState } from "./store/RootState";
 export type { default as AppThunk } from "./store/AppThunk";
-export type { default as User } from "./User";
+export type { default as UserState } from "./user/UserState"
+export type { default as User } from "./user/User";

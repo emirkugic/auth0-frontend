@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore } from "redux-persist";
 
-import { persistedAuthReducer } from "./persistConfig";
+import PersistReducers from "./persistConfig";
 
 const store = configureStore({
     reducer: {
-        auth: persistedAuthReducer,
+        auth: PersistReducers.persistedAuthReducer,
+        user: PersistReducers.persistedUserReducer
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware({
         thunk: true,

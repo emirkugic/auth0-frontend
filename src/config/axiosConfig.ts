@@ -16,8 +16,6 @@ instance.interceptors.request.use(
             try {
                 const isValidToken = await AuthService.validateToken(accessToken);
 
-                console.log('isValidToken:', isValidToken)
-
                 if (!isValidToken) {
                     throw new Error('Token is invalid');
                 }

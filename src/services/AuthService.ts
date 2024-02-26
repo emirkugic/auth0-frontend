@@ -75,5 +75,4 @@ const validateToken = async (accessToken: string | null) => {
     }
 };
 
-
 export default { login, register, logout, validateToken };
