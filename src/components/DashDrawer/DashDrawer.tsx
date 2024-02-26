@@ -46,35 +46,36 @@ const DashDrawer = () => {
       </Box>
       <List>
         {[
-          { text: "Task 1", subtasks: ["Subtask 1.1", "Subtask 1.2"] },
-          { text: "Task 2", subtasks: ["Subtask 2.1", "Subtask 2.2"] },
-          { text: "Task 3", subtasks: ["Subtask 3.1", "Subtask 3.2"] },
+          { text: "MS Teams", subtasks: [{ sub: "Register", isCompleted: true }, { sub: "Login", isCompleted: false }] },
+          { text: "Listify", subtasks: [{ sub: "Create Account", isCompleted: false }, { sub: "Sign In", isCompleted: true }] },
+          { text: "Workplace", subtasks: [{ sub: "Enroll", isCompleted: true }, { sub: "Authenticate", isCompleted: false }] },
         ].map((task, index) => (
-          <Accordion key={index}>
+          <Accordion className={classes.accordian} elevation={0} key={index}>
             <AccordionSummary
               expandIcon={<ArrowDropDownIcon />}
               aria-controls={`panel${index + 1}-content`}
               id={`panel${index + 1}-header`}
             >
-              <Typography>{`• ${task.text}`}</Typography>
+              <Typography>{`${task.text}`}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <List>
-                {task.subtasks.map((subtask) => (
+                {task.subtasks.map((subtask, index) => (
                   <ListItem
-                    className={classes.subtask}
-                    key={subtask}
+                    className={`${classes.subtask} ${subtask.isCompleted ? classes.completed : ""}`}
+                    key={index}
                     disablePadding
                   >
-                    <ListItemText primary={`  • ${subtask}`} />
+                    <ListItemText className={classes.subtask__text} primary={`${subtask.sub}`} />
                   </ListItem>
+
                 ))}
               </List>
             </AccordionDetails>
           </Accordion>
         ))}
       </List>
-    </Box>
+    </Box >
   );
 
   return (
