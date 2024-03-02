@@ -7,10 +7,16 @@ import { MouseEvent } from 'react';
 import { ReduxHooks, useSnackbar } from '../../hooks';
 import classes from "./HeaderMenuList.module.css"
 import { AuthAction } from '../../store';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLLIElement>) => void }) => {
     const dispatch = ReduxHooks.useAppDispatch()
+    const navigate = useNavigate()
     const { showSnackbar } = useSnackbar()
+
+    const handleAdminPanelClick = () => {
+        navigate("/admin-panel")
+    }
 
     const handleLogout = () => {
         dispatch(AuthAction.logout())
@@ -28,7 +34,7 @@ const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: Mo
                     Profile
                 </ListItemText>
             </MenuItem>
-            <MenuItem className={classes.item}>
+            <MenuItem className={classes.item} onClick={handleAdminPanelClick}>
                 <ListItemIcon>
                     <AdminPanelSettingsOutlinedIcon />
                 </ListItemIcon>
