@@ -13,4 +13,6 @@ export type { default as AuthState } from "./store/AuthState";
 export type { default as RootState } from "./store/RootState";
 export type { default as AppThunk } from "./store/AppThunk";
 export type { default as UserState } from "./user/UserState"
+export type { default as Subtask } from "./tasks/Subtask";
+export type { default as Task } from "./tasks/Task";
 export type { default as User } from "./user/User";

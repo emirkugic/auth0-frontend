@@ -1,20 +1,23 @@
-import { useState, useEffect, useRef } from "react";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import { Accordion, AccordionDetails, AccordionSummary, IconButton, Paper, Typography } from "@mui/material";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { faListCheck } from '@fortawesome/free-solid-svg-icons'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faListCheck } from '@fortawesome/free-solid-svg-icons'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import ListItemText from "@mui/material/ListItemText";
+import { useState, useEffect, useRef } from "react";
+import ListItem from "@mui/material/ListItem";
+import List from "@mui/material/List";
+import Box from "@mui/material/Box";
 
+import { useTasks } from "../../hooks";
+import { Subtask, Task } from "../../types";
 import classes from "./DashDrawer.module.css";
 
 const DashDrawer = () => {
   const [open, setOpen] = useState(false);
   const [expandedAccordion, setExpandedAccordion] = useState<string | false>(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const { data } = useTasks();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -54,11 +57,7 @@ const DashDrawer = () => {
         </Typography>
       </Box>
       <List>
-        {[
-          { text: "MS Teams", subtasks: [{ sub: "Register", isCompleted: true }, { sub: "Login", isCompleted: false }] },
-          { text: "Listify", subtasks: [{ sub: "Register", isCompleted: true }, { sub: "Login", isCompleted: false }] },
-          { text: "Workplace", subtasks: [{ sub: "Register", isCompleted: true }, { sub: "Login", isCompleted: false }] },
-        ].map((task, index) => (
+        {data && data.map((task: Task, index: number) => (
           <Accordion
             key={index}
             className={classes.accordian}
@@ -71,17 +70,17 @@ const DashDrawer = () => {
               aria-controls={`panel${index + 1}-content`}
               id={`panel${index + 1}-header`}
             >
-              <Typography>{`${task.text}`}</Typography>
+              <Typography>{task.name}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <List>
-                {task.subtasks.map((subtask, index) => (
+                {task.subtasks.map((subtask: Subtask, subIndex: number) => (
                   <ListItem
-                    className={`${classes.subtask} ${subtask.isCompleted ? classes.completed : ""}`}
-                    key={index}
+                    className={`${classes.subtask} ${subtask.status ? classes.completed : ""}`}
+                    key={subIndex}
                     disablePadding
                   >
-                    <ListItemText className={classes.subtask__text} primary={`${subtask.sub}`} />
+                    <ListItemText className={classes.subtask__text} primary={`${subtask.name}`} />
                   </ListItem>
                 ))}
               </List>
@@ -89,7 +88,7 @@ const DashDrawer = () => {
           </Accordion>
         ))}
       </List>
-    </Box >
+    </Box>
   );
 
   return (
