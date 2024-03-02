@@ -29,10 +29,16 @@ const Routes = () => {
     {
       path: "/",
       element: <ProtectedRoute {...defaultProtectedRouteProps} outlet={<Dashboard />} />,
+      children: [
+        {
+          path: "/",
+          element: <h1>Home</h1>,
+        },
+      ]
     },
     {
       path: "/admin-panel",
-      element: <AdminPanel />,
+      element: <ProtectedRoute {...defaultProtectedRouteProps} outlet={<AdminPanel />} />,
     },
     {
       path: "/forgot-password",
