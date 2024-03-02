@@ -9,12 +9,13 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   gap: 2rem;
   grid-auto-flow: dense;
-  max-width: 70rem;
+  max-width: 40rem;
   margin: 0 auto;
   justify-content: center;
+  z-index: 1;
 }
 
 .title {
