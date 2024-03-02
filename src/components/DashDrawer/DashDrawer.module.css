@@ -76,11 +76,12 @@
 
 .subtask.completed::before {
   width: .2rem;
-  background-color: #35C333;
+  background-color: var(--success-color);
 }
 
 .container__drawer {
-  position: absolute;
+  z-index: 2;
+  position: fixed;
   top: 0;
   transform: translate(-70%, 55%);
   transition: transform 0.3s ease-in-out; 
