@@ -48,7 +48,7 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
                     className={classes["profile-menu__roles"]}
                     variant="subtitle1"
                     component="span">
-                    {StringManipulations.capitalizeFirstLetter(roles[0])}
+                    {roles && StringManipulations.capitalizeFirstLetter(roles[0])}
                 </Typography>
             </Box>
         </Box>

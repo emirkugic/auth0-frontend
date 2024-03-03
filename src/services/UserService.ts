@@ -1,4 +1,5 @@
 import { axiosInstance } from '../config';
+import { User } from '../types';
 
 export const fetchUserData = async () => {
     try {
@@ -12,5 +13,16 @@ export const fetchUserData = async () => {
     }
 };
 
+const fetchAllUsersData = async (): Promise<User[]> => {
+    try {
+        const response = await axiosInstance.get('/users');
 
-export default { fetchUserData }
+        const userData = response.data;
+
+        return userData;
+    } catch (error) {
+        throw new Error('Failed to fetch user data');
+    }
+}
+
+export default { fetchUserData, fetchAllUsersData }

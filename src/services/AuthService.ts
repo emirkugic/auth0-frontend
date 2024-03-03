@@ -9,7 +9,7 @@ import { axiosInstance } from "../config";
 const login = async (
     loginData: User | undefined,
     dispatch: ThunkDispatch<RootState, unknown, Action>
-) => {
+): Promise<void> => {
     try {
         const {
             data: { access_token },

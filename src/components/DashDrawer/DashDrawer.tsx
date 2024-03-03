@@ -57,7 +57,7 @@ const DashDrawer = () => {
         </Typography>
       </Box>
       <List>
-        {data && data.map((task: Task, index: number) => (
+        {data?.map((task: Task, index: number) => (
           <Accordion
             key={index}
             className={classes.accordian}
