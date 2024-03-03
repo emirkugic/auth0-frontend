@@ -42,7 +42,7 @@ const UserList = () => {
                     <TextField
                         className={classes['user-list__search']}
                         id="input-search"
-                        placeholder="Search users..."
+                        placeholder="Search employees..."
                         size="small"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
