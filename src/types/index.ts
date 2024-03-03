@@ -8,6 +8,7 @@ export type { default as AppThunkDispatch } from "./store/AppThunkDispatch";
 export type { default as SnackbarState } from "./snackbar/SnackbarState";
 export type { default as HeaderMenuProps } from "./ui/HeaderMenuProps";
 export type { default as RegisterFormProps } from "./forms/FormProps";
+export type { default as UserItemProps } from "./user/UserItemProps";
 export type { default as LoginFormProps } from "./forms/FormProps";
 export type { default as AuthState } from "./store/AuthState";
 export type { default as RootState } from "./store/RootState";

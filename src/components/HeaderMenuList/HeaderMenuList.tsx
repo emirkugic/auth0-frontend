@@ -1,13 +1,14 @@
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import { ListItemIcon, ListItemText, MenuItem, MenuList } from "@mui/material";
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { faIdCard, faUser } from '@fortawesome/free-regular-svg-icons'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { MouseEvent } from 'react';
 
 import { ReduxHooks, useSnackbar } from '../../hooks';
 import classes from "./HeaderMenuList.module.css"
 import { AuthAction } from '../../store';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLLIElement>) => void }) => {
     const dispatch = ReduxHooks.useAppDispatch()
@@ -28,7 +29,7 @@ const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: Mo
         <MenuList>
             <MenuItem className={classes.item} onClick={handleProfileClick}>
                 <ListItemIcon>
-                    <PersonOutlineIcon />
+                    <FontAwesomeIcon icon={faUser as IconProp} />
                 </ListItemIcon>
                 <ListItemText>
                     Profile
@@ -36,7 +37,7 @@ const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: Mo
             </MenuItem>
             <MenuItem className={classes.item} onClick={handleAdminPanelClick}>
                 <ListItemIcon>
-                    <AdminPanelSettingsOutlinedIcon />
+                    <FontAwesomeIcon icon={faIdCard as IconProp} />
                 </ListItemIcon>
                 <ListItemText>
                     Admin Panel

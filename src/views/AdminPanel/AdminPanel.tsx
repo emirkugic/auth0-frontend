@@ -1,15 +1,12 @@
-import { Box, Typography } from "@mui/material"
-
 import { Header } from "../../components/Header"
+import { UserList } from "../../components/UserList"
 
 const AdminPanel = () => {
     return (
-        <Box>
+        <>
             <Header />
-            <Typography>
-                Welcome to Admin Panel
-            </Typography>
-        </Box>
+            <UserList />
+        </>
     )
 }
 
