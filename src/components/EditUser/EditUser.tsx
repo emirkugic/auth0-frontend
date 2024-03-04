@@ -1,5 +1,6 @@
+import { IconButton, Paper, Typography } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
 import { FC } from "react";
-import { Button, Paper, Typography } from "@mui/material";
 
 import { GenerateUserProps } from "../../types";
 import { PopupType } from "../../enums";
@@ -13,9 +14,9 @@ const EditUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadeProps, 
 
     return isVisible ? (
         <Paper className={classes['edit-user-paper']} style={fadeProps.style}>
-            <Button onClick={handleExit}>
-                Exit
-            </Button>
+            <IconButton onClick={handleExit}>
+                <ClearIcon />
+            </IconButton>
             <Typography>
                 Edit User
             </Typography>

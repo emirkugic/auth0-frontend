@@ -1,4 +1,5 @@
-import { Button, Paper } from "@mui/material";
+import { IconButton, Paper } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
 import { FC } from "react";
 
 import { GenerateUserProps } from "../../types";
@@ -13,9 +14,9 @@ const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadePro
 
     return isVisible ? (
         <Paper className={classes['generate-user-paper']} style={fadeProps.style}>
-            <Button onClick={handleExit}>
-                Exit
-            </Button>
+            <IconButton onClick={handleExit}>
+                <ClearIcon />
+            </IconButton>
         </Paper>
     ) : null;
 }
