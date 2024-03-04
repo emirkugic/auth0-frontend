@@ -1,19 +1,21 @@
 .user-list-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     margin-top: 3rem;
     width: 100%;
 }
 
 .user-list-paper {
+    margin-right: .5rem;
     width: 40%;
     min-width: 23rem;
     height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 1rem;
 }
 
 .user-list__title-container {
@@ -38,7 +40,7 @@
 
 .user-list__title {
     position: relative;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     width: 100%;
     text-align: center;
 }

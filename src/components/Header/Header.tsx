@@ -6,7 +6,7 @@ import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 
-import skimLogoDark from "../../assets/logos/CompanyLogo/skim-dark.svg";
+import auth0LogoDark from "../../assets/logos/authLogo/auth0-dark.svg";
 import classes from "./Header.module.css";
 import { useState } from "react";
 import { HeaderMenu } from '../HeaderMenu';
@@ -41,7 +41,7 @@ function ResponsiveAppBar() {
       >
         <Toolbar disableGutters>
           <Box className={classes["app-bar__logo"]}>
-            <img src={skimLogoDark} alt="Skim Technologies Logo" />
+            <img src={auth0LogoDark} alt="Skim Technologies Logo" />
           </Box>
 
           <Box className={classes["app-bar__avatar"]}>
