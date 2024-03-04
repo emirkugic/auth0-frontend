@@ -7,7 +7,7 @@ import { FC } from "react";
 import { UserItemProps } from "../../types";
 import classes from "./UserItem.module.css";
 
-const UserItem: FC<UserItemProps> = ({ user }) => {
+const UserItem: FC<UserItemProps> = ({ user, handleEditButtonClick }) => {
 
     const handleEmailClick = () => {
         window.open(`mailto:${user.email}`);
@@ -31,7 +31,10 @@ const UserItem: FC<UserItemProps> = ({ user }) => {
                     </Typography>
                 </Box>
             </Box>
-            <Button className={classes['user-list__edit-action']} variant="contained">
+            <Button
+                className={classes['user-list__edit-action']}
+                variant="contained"
+                onClick={handleEditButtonClick}>
                 <FontAwesomeIcon
                     className={classes["user-list__edit-icon"]}
                     icon={faPenToSquare as IconProp}

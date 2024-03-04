@@ -5,18 +5,34 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Fuse from 'fuse.js';
 
-import { useUsers } from "../../hooks";
-import classes from "./UserList.module.css"
+import { useFade, useUsers } from "../../hooks";
 import UserItem from "../UserItem/UserItem";
 import { User } from "../../types";
+import { PopupType } from "../../enums";
+import classes from "./UserList.module.css"
+import { GenerateUser } from "../GenerateUser";
+import { EditUser } from "../EditUser";
 
 const UserList = () => {
-    const { data, isLoading, isError } = useUsers();
-    const navigate = useNavigate();
+    const [showPopup, setShowPopup] = useState<PopupType | null>(null);
     const [query, setQuery] = useState('');
+
+    const { data, isLoading, isError } = useUsers();
+    const [isVisible, setVisible, fadeProps] = useFade(false);
+    const navigate = useNavigate();
 
     const handleReturn = () => {
         navigate(-1);
+    }
+
+    const handleGenerateAuthTokenButtonClick = () => {
+        setShowPopup(PopupType.ShowGenerateAuthToken);
+        setVisible(true);
+    }
+
+    const handleEditButtonClick = () => {
+        setShowPopup(PopupType.ShowEditUser);
+        setVisible(true);
     }
 
     const fuzzySearch = (data: User[], query: string) => {
@@ -26,6 +42,33 @@ const UserList = () => {
     };
 
     const filteredUsers = query ? fuzzySearch(data ?? [], query) : data;
+
+    const conditionalPopups = (popupType: PopupType) => {
+        switch (popupType) {
+            case PopupType.ShowGenerateAuthToken:
+                return (
+                    <GenerateUser
+                        setShowPopup={setShowPopup}
+                        isVisible={isVisible}
+                        setVisible={setVisible}
+                        fadeProps={fadeProps}
+                    />
+                );
+            case PopupType.ShowEditUser:
+                return (
+                    <EditUser
+                        setShowPopup={setShowPopup}
+                        isVisible={isVisible}
+                        setVisible={setVisible}
+                        fadeProps={fadeProps}
+                    />
+                );
+            case PopupType.Exit:
+                return null;
+            default:
+                return null;
+        }
+    }
 
     return (
         <Box className={classes['user-list-container']}>
@@ -50,7 +93,10 @@ const UserList = () => {
                             startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>
                         }}
                     />
-                    <Button className={classes['user-list__search-action']} variant="contained">
+                    <Button
+                        className={classes['user-list__search-action']}
+                        variant="contained"
+                        onClick={handleGenerateAuthTokenButtonClick}>
                         Generate Auth Token
                     </Button>
                 </Box>
@@ -58,10 +104,16 @@ const UserList = () => {
                     {isLoading && <Box className={classes.loading}><CircularProgress /></Box>}
                     {isError && <Typography>Error fetching users</Typography>}
                     {filteredUsers?.map((user: User) => (
-                        <UserItem key={user?.id} user={user} />
+                        <UserItem
+                            key={user?.id}
+                            user={user}
+                            handleEditButtonClick={handleEditButtonClick} />
                     ))}
                 </Box>
             </Paper>
+            {
+                showPopup && conditionalPopups(showPopup)
+            }
         </Box>
     )
 }

@@ -1,13 +1,14 @@
 .user-list-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     margin-top: 3rem;
     width: 100%;
 }
 
 .user-list-paper {
+    margin-right: .5rem;
     width: 40%;
     min-width: 23rem;
     height: 80vh;
