@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 import { PopupType } from "../../enums";
-import { FadeProps } from "..";
+import { FadeProps, User } from "..";
 
 type EditUserProps = {
+    user?: User;
     setShowPopup: Dispatch<SetStateAction<PopupType | null>>;
     isVisible: boolean;
     setVisible: Dispatch<SetStateAction<boolean>>;

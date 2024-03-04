@@ -9,8 +9,8 @@ import { MouseEvent } from 'react';
 import { ReduxHooks, useSnackbar } from '../../hooks';
 import { AuthAction } from '../../store';
 import { selectUser } from "../../store/slice/userSlice";
-import classes from "./HeaderMenuList.module.css"
 import { UserRoles } from "../../enums";
+import classes from "./HeaderMenuList.module.css"
 
 const HeaderMenuList = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLLIElement>) => void }) => {
     const dispatch = ReduxHooks.useAppDispatch()

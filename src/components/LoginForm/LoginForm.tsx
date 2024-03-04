@@ -61,7 +61,6 @@ const LoginForm = () => {
     event.preventDefault();
   };
 
-
   return (
     <form className={classes.form} onSubmit={formik.handleSubmit}>
       <CardContent className={classes["card__content"]}>

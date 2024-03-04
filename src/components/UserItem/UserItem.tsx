@@ -1,10 +1,11 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FC } from "react";
 
 import { UserItemProps } from "../../types";
+import { stringAvatar } from "../../utils";
 import classes from "./UserItem.module.css";
 
 const UserItem: FC<UserItemProps> = ({ user, handleEditButtonClick }) => {
@@ -18,6 +19,8 @@ const UserItem: FC<UserItemProps> = ({ user, handleEditButtonClick }) => {
             <Box className={classes['user-list__user-info']}>
                 <Avatar
                     className={classes['user-list__avatar']}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    {...stringAvatar(`${user.firstName} ${user.lastName}`)}
                 />
                 <Box>
                     <Typography
@@ -31,15 +34,17 @@ const UserItem: FC<UserItemProps> = ({ user, handleEditButtonClick }) => {
                     </Typography>
                 </Box>
             </Box>
-            <Button
-                className={classes['user-list__edit-action']}
-                variant="contained"
-                onClick={handleEditButtonClick}>
-                <FontAwesomeIcon
-                    className={classes["user-list__edit-icon"]}
-                    icon={faPenToSquare as IconProp}
-                />
-            </Button>
+            <Tooltip title={`Edit ${user.firstName}`} arrow placement="left">
+                <Button
+                    className={classes['user-list__edit-action']}
+                    variant="contained"
+                    onClick={() => handleEditButtonClick(user)}>
+                    <FontAwesomeIcon
+                        className={classes["user-list__edit-icon"]}
+                        icon={faPenToSquare as IconProp}
+                    />
+                </Button>
+            </Tooltip>
         </Box>
     );
 };

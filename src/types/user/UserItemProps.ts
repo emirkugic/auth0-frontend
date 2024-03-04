@@ -2,7 +2,7 @@ import { User } from "..";
 
 type UserItemProps = {
     user: User;
-    handleEditButtonClick: () => void;
+    handleEditButtonClick: (user: User) => void;
 };
 
 export default UserItemProps;

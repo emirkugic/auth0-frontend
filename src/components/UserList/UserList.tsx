@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, IconButton, InputAdornment, Paper, TextField, Typography } from "@mui/material"
+import { Box, Button, CircularProgress, IconButton, InputAdornment, Paper, TextField, Tooltip, Typography } from "@mui/material"
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
@@ -15,6 +15,7 @@ import { EditUser } from "../EditUser";
 
 const UserList = () => {
     const [showPopup, setShowPopup] = useState<PopupType | null>(null);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [query, setQuery] = useState('');
 
     const { data, isLoading, isError } = useUsers();
@@ -30,8 +31,9 @@ const UserList = () => {
         setVisible(true);
     }
 
-    const handleEditButtonClick = () => {
+    const handleEditButtonClick = (user: User) => {
         setShowPopup(PopupType.ShowEditUser);
+        setSelectedUser(user);
         setVisible(true);
     }
 
@@ -57,6 +59,7 @@ const UserList = () => {
             case PopupType.ShowEditUser:
                 return (
                     <EditUser
+                        user={selectedUser ?? undefined}
                         setShowPopup={setShowPopup}
                         isVisible={isVisible}
                         setVisible={setVisible}
@@ -93,12 +96,14 @@ const UserList = () => {
                             startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>
                         }}
                     />
-                    <Button
-                        className={classes['user-list__search-action']}
-                        variant="contained"
-                        onClick={handleGenerateAuthTokenButtonClick}>
-                        Generate Auth Token
-                    </Button>
+                    <Tooltip title="Generate Auth Token" arrow placement="bottom">
+                        <Button
+                            className={classes['user-list__search-action']}
+                            variant="contained"
+                            onClick={handleGenerateAuthTokenButtonClick}>
+                            Generate Auth Token
+                        </Button>
+                    </Tooltip>
                 </Box>
                 <Box className={classes['user-list__content-container']}>
                     {isLoading && <Box className={classes.loading}><CircularProgress /></Box>}
