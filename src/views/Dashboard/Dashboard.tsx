@@ -10,12 +10,14 @@ const Dashboard = () => {
   return (
     <Box className={classes.container}>
       <Header />
-      <DashDrawer />
-      <Box className={classes["container__service-cards"]}>
-        <Box className={classes["grid-container"]}>
-          {[...Array(numberOfServiceCards)].map((_, index) => (
-            <ServiceCard key={index} />
-          ))}
+      <Box className={classes['container-flex']}>
+        <DashDrawer />
+        <Box className={classes["container__service-cards"]}>
+          <Box className={classes["grid-container"]}>
+            {[...Array(numberOfServiceCards)].map((_, index) => (
+              <ServiceCard key={index} />
+            ))}
+          </Box>
         </Box>
       </Box>
     </Box>

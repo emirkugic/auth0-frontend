@@ -2,6 +2,13 @@
   width: 100%;
 }
 
+.container-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
 .container__service-cards {
   display: flex;
   margin-top: 15vh;
