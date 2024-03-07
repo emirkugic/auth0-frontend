@@ -14,9 +14,11 @@ import { Typography } from '@mui/material';
 import { stringAvatar } from "../../utils";
 import { ReduxHooks } from "../../hooks";
 import { selectUser } from "../../store/slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
 
   const user = ReduxHooks.useAppSelector(selectUser)
@@ -32,6 +34,10 @@ function ResponsiveAppBar() {
     setAnchorEl(null);
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <AppBar position="static" elevation={1} className={classes["app-bar"]}>
       <Container
@@ -41,7 +47,7 @@ function ResponsiveAppBar() {
       >
         <Toolbar disableGutters>
           <Box className={classes["app-bar__logo"]}>
-            <img src={auth0LogoDark} alt="Skim Technologies Logo" />
+            <img src={auth0LogoDark} alt="Skim Technologies Logo" onClick={handleLogoClick} />
           </Box>
 
           <Box className={classes["app-bar__avatar"]}>
