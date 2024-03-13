@@ -5,9 +5,9 @@ import Tooltip from "@mui/material/Tooltip";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import { MouseEvent } from "react";
 
 import auth0LogoDark from "../../assets/logos/authLogo/auth0-dark.svg";
-import classes from "./Header.module.css";
 import { useState } from "react";
 import { HeaderMenu } from '../HeaderMenu';
 import { Typography } from '@mui/material';
@@ -15,6 +15,7 @@ import { stringAvatar } from "../../utils";
 import { ReduxHooks } from "../../hooks";
 import { selectUser } from "../../store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
+import classes from "./Header.module.css";
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -26,7 +27,7 @@ function ResponsiveAppBar() {
 
   const { firstName, lastName } = user;
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
