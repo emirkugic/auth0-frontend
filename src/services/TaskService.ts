@@ -1,8 +1,8 @@
 import { axiosInstance } from '../config';
 
-export const fetchTasksData = async () => {
+export const fetchTasksByUserId = async (userId: string) => {
     try {
-        const response = await axiosInstance.get('/tasks');
+        const response = await axiosInstance.get(`/tasks/user/${userId}`);
 
         const tasksData = response.data;
 
@@ -12,5 +12,4 @@ export const fetchTasksData = async () => {
     }
 };
 
-
-export default { fetchTasksData }
+export default { fetchTasksByUserId }
