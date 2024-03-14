@@ -71,9 +71,7 @@ const validateToken = async () => {
 
 const me = async () => {
     try {
-        const response = (await axiosInstance.post('auth/me')).data
-
-        return response
+        return (await axiosInstance.post('auth/me')).data
     } catch (error) {
         console.error('Failed to fetch user information:', error);
         return false;
@@ -93,8 +91,7 @@ const refresh = async () => {
 
 const forgotPassword = async (email: string) => {
     try {
-        const response = await axiosInstance.post('auth/forgotPassword', { email });
-        return response.data;
+        return (await axiosInstance.post('auth/forgotPassword', { email })).data;
     } catch (error) {
         console.error('Forgot Password Error:', error);
         throw new Error('Forgot password request failed.');
@@ -103,8 +100,7 @@ const forgotPassword = async (email: string) => {
 
 const validateResetCode = async (email: string, resetCode: number) => {
     try {
-        const response = await axiosInstance.post('auth/validateResetCode', { email, reset_code: resetCode });
-        return response.data;
+        return (await axiosInstance.post('auth/validateResetCode', { email, reset_code: resetCode })).data;
     } catch (error) {
         console.error('Validate Reset Code Error:', error);
         throw new Error('Failed to validate reset code.');
@@ -113,12 +109,13 @@ const validateResetCode = async (email: string, resetCode: number) => {
 
 const resetPassword = async (password: string, confirmPassword: string, resetToken: string) => {
     try {
-        const response = await axiosInstance.post('auth/resetPassword', { password, password_confirmation: confirmPassword }, {
-            headers: {
-                Authorization: `Bearer ${resetToken}`
-            }
-        });
-        return response.data;
+        return (
+            await axiosInstance.post('auth/resetPassword', { password, password_confirmation: confirmPassword }, {
+                headers: {
+                    Authorization: `Bearer ${resetToken}`
+                }
+            })
+        ).data;
     } catch (error) {
         console.error('Reset Password Error:', error);
         throw new Error('Failed to reset password.');
@@ -127,8 +124,7 @@ const resetPassword = async (password: string, confirmPassword: string, resetTok
 
 const generateAuthToken = async (email: string, role: string) => {
     try {
-        const response = await axiosInstance.post('auth/generateAuthToken', { email, role });
-        return response.data;
+        return (await axiosInstance.post('auth/generateAuthToken', { email, role })).data;
     } catch (error) {
         console.error('Generate Auth Token Error:', error);
         throw new Error('Failed to generate auth token.');

@@ -3,11 +3,7 @@ import { User } from '../types';
 
 export const fetchUserData = async () => {
     try {
-        const response = await axiosInstance.post('/auth/me');
-
-        const userData = response.data;
-
-        return userData;
+        return (await axiosInstance.post('/auth/me')).data;
     } catch (error) {
         throw new Error('Failed to fetch user data');
     }
@@ -15,11 +11,7 @@ export const fetchUserData = async () => {
 
 const fetchAllUsersData = async (): Promise<User[]> => {
     try {
-        const response = await axiosInstance.get('/users');
-
-        const userData = response.data;
-
-        return userData;
+        return (await axiosInstance.get('/users')).data;
     } catch (error) {
         throw new Error('Failed to fetch user data');
     }

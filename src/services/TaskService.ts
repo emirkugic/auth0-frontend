@@ -2,11 +2,7 @@ import { axiosInstance } from '../config';
 
 export const fetchTasksByUserId = async (userId: string) => {
     try {
-        const response = await axiosInstance.get(`/tasks/user/${userId}`);
-
-        const tasksData = response.data;
-
-        return tasksData;
+        return (await axiosInstance.get(`/tasks/user/${userId}`)).data;
     } catch (error) {
         throw new Error('Failed to fetch tasks data');
     }
