@@ -3,13 +3,15 @@
 }
 
 .container__service-cards {
-  display: flex;
-  margin-top: 15vh;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  margin: 2rem 0;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
   grid-auto-flow: dense;
   max-width: 40rem;
@@ -27,4 +29,21 @@
 
 .grid-container .service-card {
   width: 100%;
+}
+
+/* 768px */
+@media screen and (min-width: 48rem) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 1024px */
+@media screen and (min-width: 64rem) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .container__service-cards {
+    margin: 0;
+  }
 }
