@@ -71,7 +71,7 @@ const RegisterForm = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setIsLoading(true);
-      const formattedDateOfBirth = values.dateOfBirth?.["$d"] ? format(values.dateOfBirth["$d"], 'yyyy-MM-dd') : null;
+      const formattedDateOfBirth = values.dateOfBirth?.["$d"] ? format(values.dateOfBirth["$d"], 'yyyy-MM-dd') : undefined;
 
       const formattedValues = {
         first_name: values.firstName,

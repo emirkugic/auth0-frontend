@@ -68,42 +68,41 @@ const DashDrawer = () => {
         </Typography>
       </Box>
       <List>
-        {data &&
-          data.map((task: Task, index: number) => (
-            <Accordion
-              key={index}
-              className={classes.accordian}
-              elevation={0}
-              expanded={expandedAccordion === `panel${index + 1}`}
-              onChange={handleAccordionChange(`panel${index + 1}`)}
+        {data?.map((task: Task, index: number) => (
+          <Accordion
+            key={index}
+            className={classes.accordian}
+            elevation={0}
+            expanded={expandedAccordion === `panel${index + 1}`}
+            onChange={handleAccordionChange(`panel${index + 1}`)}
+          >
+            <AccordionSummary
+              expandIcon={<ArrowDropDownIcon />}
+              aria-controls={`panel${index + 1}-content`}
+              id={`panel${index + 1}-header`}
             >
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon />}
-                aria-controls={`panel${index + 1}-content`}
-                id={`panel${index + 1}-header`}
-              >
-                <Typography>{task.name}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List>
-                  {task.subtasks.map((subtask: Subtask, subIndex: number) => (
-                    <ListItem
-                      className={`${classes.subtask} ${
-                        subtask.status ? classes.completed : ""
-                      }`}
-                      key={subIndex}
-                      disablePadding
-                    >
-                      <ListItemText
-                        className={classes.subtask__text}
-                        primary={`${subtask.name}`}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+              <Typography>{task.name}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List>
+                {task.subtasks.map((subtask: Subtask, subIndex: number) => (
+                  <ListItem
+                    className={`${classes.subtask} ${
+                      subtask.status ? classes.completed : ""
+                    }`}
+                    key={subIndex}
+                    disablePadding
+                  >
+                    <ListItemText
+                      className={classes.subtask__text}
+                      primary={`${subtask.name}`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </List>
     </Box>
   );

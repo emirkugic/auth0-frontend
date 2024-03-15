@@ -14,10 +14,10 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import classes from "./LoginForm.module.css";
-import { ReduxHooks } from "../../hooks";
 import { AuthAction } from "../../store";
 import useSnackbar from "../../hooks/useSnackbar";
+import { ReduxHooks } from "../../hooks";
+import classes from "./LoginForm.module.css";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,12 +36,20 @@ const LoginForm = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      setIsLoading(true);
-      dispatch(AuthAction.login(values));
-      setIsLoading(false);
-      formik.resetForm();
-      showSnackbar("Logged in successfully", "success");
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        setIsLoading(true);
+        await dispatch(AuthAction.login(values));
+
+        resetForm();
+        showSnackbar("Logged in successfully", "success");
+
+      } catch (error) {
+        showSnackbar("Error logging in", "error");
+      } finally {
+        setIsLoading(false);
+        setSubmitting(false);
+      }
     },
   });
 
