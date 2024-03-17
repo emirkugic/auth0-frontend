@@ -16,8 +16,9 @@ import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
 
-import { useTasks } from "../../hooks";
+import { ReduxHooks, useTasks } from "../../hooks";
 import { Subtask, Task } from "../../types";
+import { selectUser } from "../../store/slice/userSlice";
 import classes from "./DashDrawer.module.css";
 
 const DashDrawer = () => {
@@ -27,9 +28,15 @@ const DashDrawer = () => {
   );
   const drawerRef = useRef<HTMLDivElement>(null);
 
-  const { data } = useTasks();
+  const user = ReduxHooks.useAppSelector(selectUser)
+  if (!user) return null;
+
+
+  const { data } = useTasks(user.id ?? 0);
 
   useEffect(() => {
+    console.log(data)
+
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as HTMLElement;
       if (
@@ -46,12 +53,16 @@ const DashDrawer = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [data]);
 
   const handleAccordionChange =
     (panel: string) => (_event: React.ChangeEvent<{}>, isExpanded: boolean) => {
       setExpandedAccordion(isExpanded ? panel : false);
     };
+
+  if (!data || data.length === 0) {
+    return null;
+  }
 
   const list = (
     <Box className={classes.container__drawer__list} role="presentation">
@@ -87,9 +98,8 @@ const DashDrawer = () => {
               <List>
                 {task.subtasks.map((subtask: Subtask, subIndex: number) => (
                   <ListItem
-                    className={`${classes.subtask} ${
-                      subtask.status ? classes.completed : ""
-                    }`}
+                    className={`${classes.subtask} ${subtask.status ? classes.completed : ""
+                      }`}
                     key={subIndex}
                     disablePadding
                   >

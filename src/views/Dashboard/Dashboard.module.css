@@ -10,7 +10,7 @@
 }
 
 .container__service-cards {
-  height: 100vh;
+  height: 90vh;
   display: grid;
   place-items: center;
   margin: 2rem 0;

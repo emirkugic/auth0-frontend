@@ -1,4 +1,5 @@
 import { ThunkDispatch } from "redux-thunk";
+import { jwtDecode } from "jwt-decode";
 import { Action } from "redux";
 import axios from "axios";
 
@@ -55,9 +56,11 @@ const logout = async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
     }
 }
 
-const validateToken = async () => {
+const validateToken = async (accessToken: string) => {
     try {
-        const response = await axiosInstance.get('auth/validate');
+        const response = await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate/${accessToken}`);
+
+        console.log(response.data.message)
 
         if (response.data.message === true) {
             return true;
@@ -131,4 +134,16 @@ const generateAuthToken = async (email: string, role: string) => {
     }
 };
 
-export default { login, register, logout, validateToken, me, refresh, forgotPassword, validateResetCode, resetPassword, generateAuthToken };
+const decodeToken = (token: string) => {
+    try {
+        const decoded = jwtDecode(token);
+        return decoded;
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+    }
+};
+
+export default { login, register, logout, decodeToken, validateToken, me, refresh, forgotPassword, validateResetCode, resetPassword, generateAuthToken };
+
+
