@@ -17,4 +17,12 @@ const fetchAllUsersData = async (): Promise<User[]> => {
     }
 }
 
-export default { fetchUserData, fetchAllUsersData }
+const updateUser = async (userId: string): Promise<User[]> => {
+    try {
+        return (await axiosInstance.patch(`/users/${userId}`)).data;
+    } catch (error) {
+        throw new Error('Failed to fetch user data');
+    }
+}
+
+export default { fetchUserData, fetchAllUsersData, updateUser }
