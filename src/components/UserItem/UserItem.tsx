@@ -2,7 +2,7 @@ import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import { UserItemProps } from "../../types";
 import { stringAvatar } from "../../utils";
@@ -14,11 +14,16 @@ const UserItem: FC<UserItemProps> = ({ user, handleEditButtonClick }) => {
         window.open(`mailto:${user.email}`);
     };
 
+    useEffect(() => {
+        console.log(user.imageUrl)
+    }, [])
+
     return (
         <Box key={user.id} className={classes['user-list__content']}>
             <Box className={classes['user-list__user-info']}>
                 <Avatar
                     className={classes['user-list__avatar']}
+                    src={user.imageUrl + '.jpeg'}
                     alt={`${user.firstName} ${user.lastName}`}
                     {...stringAvatar(`${user.firstName} ${user.lastName}`)}
                 />

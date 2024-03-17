@@ -25,7 +25,7 @@ function ResponsiveAppBar() {
   const user = ReduxHooks.useAppSelector(selectUser)
   if (!user) return null;
 
-  const { firstName, lastName } = user;
+  const { firstName, lastName, imageUrl } = user;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -56,7 +56,7 @@ function ResponsiveAppBar() {
               <IconButton sx={{ p: 0 }} onClick={handleClick}>
                 <Avatar
                   alt={`${firstName} ${lastName}`}
-                  src="https://images.mubicdn.net/images/cast_member/830947/cache-738230-1638187722/image-w856.jpg?size=800x"
+                  src={imageUrl}
                   {...stringAvatar(`${firstName} ${lastName}`)}
                 />
               </IconButton>

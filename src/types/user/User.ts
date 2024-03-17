@@ -6,7 +6,8 @@ type User = {
     date_of_birth?: string
     password?: string
     email: string
-    roles?: string[]
+    roles?: string[],
+    imageUrl?: string
 }
 
 export default User;

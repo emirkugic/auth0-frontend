@@ -60,8 +60,6 @@ const validateToken = async (accessToken: string) => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate/${accessToken}`);
 
-        console.log(response.data.message)
-
         if (response.data.message === true) {
             return true;
         }
@@ -74,7 +72,9 @@ const validateToken = async (accessToken: string) => {
 
 const me = async () => {
     try {
-        return (await axiosInstance.post('auth/me')).data
+        const response = await axiosInstance.post('auth/me')
+
+        return response;
     } catch (error) {
         console.error('Failed to fetch user information:', error);
         return false;

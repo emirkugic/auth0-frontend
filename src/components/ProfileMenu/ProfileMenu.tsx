@@ -1,17 +1,17 @@
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect } from "react";
 
 import { StringManipulations, stringAvatar } from "../../utils";
 import { selectUser } from "../../store/slice/userSlice";
-import { ReduxHooks } from "../../hooks";
+import { ReduxHooks, useImageByUser } from "../../hooks";
 import classes from "./ProfileMenu.module.css";
 
 const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLButtonElement>) => void }) => {
     const user = ReduxHooks.useAppSelector(selectUser);
     if (!user) return null;
 
-    const { firstName, lastName, email, roles } = user;
+    const { firstName, lastName, email, roles, imageUrl } = user;
 
     const handleEmailClick = () => {
         window.open(`mailto:${email}`);
@@ -26,7 +26,7 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
                 <Avatar
                     className={classes["profile-menu__avatar"]}
                     alt={`${firstName} ${lastName}`}
-                    src="https://images.mubicdn.net/images/cast_member/830947/cache-738230-1638187722/image-w856.jpg?size=800x"
+                    src={imageUrl}
                     {...stringAvatar(`${firstName} ${lastName}`)}
                 />
                 <Typography

@@ -23,7 +23,7 @@ const fetchAllImages = async (): Promise<Image[]> => {
     }
 };
 
-const fetchImageByUserId = async (userId: string): Promise<Image> => {
+const fetchImageByUserId = async (userId: number): Promise<Image> => {
     try {
         return (await axiosInstance.get(`/images/user/${userId}`)).data;
     } catch (error) {
