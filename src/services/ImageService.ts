@@ -1,16 +1,18 @@
 import { axiosInstance } from '../config';
 import { Image } from '../types';
 
-const uploadImage = async (imageData: FormData): Promise<Image> => {
+const uploadImage = async (formData: FormData, user_id: number): Promise<Image> => {
+    console.log(formData)
+
     try {
-        return (
-            await axiosInstance.post('/images', imageData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-        ).data;
+        const response = await axiosInstance.post(`/images/${user_id}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+            transformRequest: formData => formData,
+        })
+
+        return response.data
     } catch (error) {
+        console.log(error)
         throw new Error('Failed to upload image');
     }
 };
@@ -25,7 +27,7 @@ const fetchAllImages = async (): Promise<Image[]> => {
 
 const fetchImageByUserId = async (userId: number): Promise<Image> => {
     try {
-        return (await axiosInstance.get(`/images/user/${userId}`)).data;
+        return (await axiosInstance.get(`/ images / user / ${userId} `)).data;
     } catch (error) {
         throw new Error('Failed to fetch User image');
     }
@@ -33,7 +35,7 @@ const fetchImageByUserId = async (userId: number): Promise<Image> => {
 
 const fetchImageById = async (id: number): Promise<Image> => {
     try {
-        return (await axiosInstance.get(`/images/${id}`)).data;
+        return (await axiosInstance.get(`/ images / ${id} `)).data;
     } catch (error) {
         throw new Error('Failed to fetch image');
     }
@@ -41,7 +43,7 @@ const fetchImageById = async (id: number): Promise<Image> => {
 
 const deleteImage = async (id: number): Promise<void> => {
     try {
-        await axiosInstance.delete(`/images/${id}`);
+        await axiosInstance.delete(`/ images / ${id} `);
     } catch (error) {
         throw new Error('Failed to delete image');
     }

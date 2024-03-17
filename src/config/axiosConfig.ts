@@ -5,7 +5,10 @@ import { AuthService } from '../services';
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_BE_BASE_URL,
-    timeout: 1000,
+    timeout: 3000,
+    headers: {
+        'Accept': 'application/json',
+    },
 });
 
 instance.interceptors.request.use(

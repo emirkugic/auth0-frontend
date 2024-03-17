@@ -1,10 +1,11 @@
-import { Avatar, Box, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { MouseEvent, useEffect } from "react";
-
+import { MouseEvent, useState } from "react";
 import { StringManipulations, stringAvatar } from "../../utils";
 import { selectUser } from "../../store/slice/userSlice";
-import { ReduxHooks, useImageByUser } from "../../hooks";
+import { ReduxHooks } from "../../hooks";
+
+import { UploadImagePopup } from "../UploadImagePopup";
 import classes from "./ProfileMenu.module.css";
 
 const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: MouseEvent<HTMLButtonElement>) => void }) => {
@@ -12,9 +13,18 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
     if (!user) return null;
 
     const { firstName, lastName, email, roles, imageUrl } = user;
+    const [isUploadImageOpen, setIsUploadImageOpen] = useState(false);
 
     const handleEmailClick = () => {
         window.open(`mailto:${email}`);
+    };
+
+    const handleEditImageClick = () => {
+        setIsUploadImageOpen(true);
+    };
+
+    const handleCloseUploadImage = () => {
+        setIsUploadImageOpen(false);
     };
 
     return (
@@ -23,12 +33,15 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
                 <ArrowBackIcon className={classes["profile-menu__action__icon"]} />
             </IconButton>
             <Box className={classes["profile-menu__content"]}>
-                <Avatar
-                    className={classes["profile-menu__avatar"]}
-                    alt={`${firstName} ${lastName}`}
-                    src={imageUrl}
-                    {...stringAvatar(`${firstName} ${lastName}`)}
-                />
+                <Tooltip title="Edit Image">
+                    <Avatar
+                        className={classes["profile-menu__avatar"]}
+                        alt={`${firstName} ${lastName}`}
+                        src={imageUrl}
+                        onClick={handleEditImageClick}
+                        {...stringAvatar(`${firstName} ${lastName}`)}
+                    />
+                </Tooltip>
                 <Typography
                     className={classes["profile-menu__title"]}
                     variant="h6"
@@ -51,6 +64,7 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
                     {roles && StringManipulations.capitalizeFirstLetter(roles[0])}
                 </Typography>
             </Box>
+            <UploadImagePopup open={isUploadImageOpen} onClose={handleCloseUploadImage} />
         </Box>
     )
 }

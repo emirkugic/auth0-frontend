@@ -93,6 +93,7 @@ const EditUser: FC<EditUserProps> = ({
                     <Box className={classes["edit-user__content-container"]}>
                         <Avatar
                             className={classes["edit-user__avatar"]}
+                            src={user?.imageUrl + '.jpeg'}
                             alt={`${user?.firstName} ${user?.lastName}`}
                             {...stringAvatar(`${user?.firstName} ${user?.lastName}`)}
                         />
