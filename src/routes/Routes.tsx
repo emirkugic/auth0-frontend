@@ -35,10 +35,6 @@ const Routes = () => {
       element: <ProtectedRoute {...defaultProtectedRouteProps} outlet={<AdminPanel />} />,
     },
     {
-      path: "/forgot-password",
-      element: <h1>Forgot Password</h1>,
-    },
-    {
       path: "*",
       element: <Navigate to="/" />,
     },

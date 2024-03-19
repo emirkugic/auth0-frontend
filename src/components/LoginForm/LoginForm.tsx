@@ -1,5 +1,4 @@
 import { useState, MouseEvent } from "react";
-import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -102,9 +101,6 @@ const LoginForm = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <Link to="/forgot-password" className={classes["card__content__link"]}>
-          Forgot Password?
-        </Link>
       </CardContent>
       <CardActions className={classes["card__actions"]}>
         <Button
