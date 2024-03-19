@@ -27,7 +27,11 @@ const fetchAllImages = async (): Promise<Image[]> => {
 
 const fetchImageByUserId = async (userId: number): Promise<Image> => {
     try {
-        return (await axiosInstance.get(`/ images / user / ${userId} `)).data;
+        const response = await axiosInstance.get(`/images/user/${userId}`);
+
+        console.log(response.data)
+
+        return response.data;
     } catch (error) {
         throw new Error('Failed to fetch User image');
     }
@@ -35,7 +39,7 @@ const fetchImageByUserId = async (userId: number): Promise<Image> => {
 
 const fetchImageById = async (id: number): Promise<Image> => {
     try {
-        return (await axiosInstance.get(`/ images / ${id} `)).data;
+        return (await axiosInstance.get(`/images/${id}`)).data;
     } catch (error) {
         throw new Error('Failed to fetch image');
     }
@@ -43,7 +47,7 @@ const fetchImageById = async (id: number): Promise<Image> => {
 
 const deleteImage = async (id: number): Promise<void> => {
     try {
-        await axiosInstance.delete(`/ images / ${id} `);
+        await axiosInstance.delete(`/images/${id}`);
     } catch (error) {
         throw new Error('Failed to delete image');
     }

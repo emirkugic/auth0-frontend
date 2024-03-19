@@ -7,10 +7,12 @@ import * as yup from "yup";
 import { GenerateUserProps } from "../../types";
 import { PopupType } from "../../enums";
 import { useSnackbar } from "../../hooks";
+import useGenerateAuthToken from "../../hooks/useGenerateAuthToken";
 import classes from './GenerateUser.module.css';
 
 const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadeProps, isVisible }) => {
     const { showSnackbar } = useSnackbar();
+    const { mutate } = useGenerateAuthToken()
 
     const validationSchema = yup.object({
         email: yup.string().email("Invalid email address").required("Email is required"),
@@ -25,9 +27,9 @@ const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadePro
         validationSchema: validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
-                console.log(values);
                 resetForm();
                 showSnackbar("Generated user successfully", "success");
+                mutate({ email: values.email, role: values.role })
             } catch (error) {
                 showSnackbar("Error generating user", "error");
             } finally {

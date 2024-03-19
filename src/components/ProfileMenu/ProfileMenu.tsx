@@ -37,7 +37,7 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
                     <Avatar
                         className={classes["profile-menu__avatar"]}
                         alt={`${firstName} ${lastName}`}
-                        src={imageUrl}
+                        src={imageUrl?.concat('.jpg')}
                         onClick={handleEditImageClick}
                         {...stringAvatar(`${firstName} ${lastName}`)}
                     />

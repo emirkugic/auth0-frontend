@@ -56,7 +56,7 @@ function ResponsiveAppBar() {
               <IconButton sx={{ p: 0 }} onClick={handleClick}>
                 <Avatar
                   alt={`${firstName} ${lastName}`}
-                  src={imageUrl}
+                  src={imageUrl?.concat('.jpg')}
                   {...stringAvatar(`${firstName} ${lastName}`)}
                 />
               </IconButton>
