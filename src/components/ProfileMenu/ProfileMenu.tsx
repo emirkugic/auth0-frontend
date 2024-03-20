@@ -12,7 +12,7 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
     const user = ReduxHooks.useAppSelector(selectUser);
     if (!user) return null;
 
-    const { firstName, lastName, email, roles, imageUrl } = user;
+    const { firstName, lastName, email, teamName, imageUrl } = user;
     const [isUploadImageOpen, setIsUploadImageOpen] = useState(false);
 
     const handleEmailClick = () => {
@@ -61,7 +61,7 @@ const ProfileMenu = ({ handleProfileClick }: { handleProfileClick: (event: Mouse
                     className={classes["profile-menu__roles"]}
                     variant="subtitle1"
                     component="span">
-                    {roles && StringManipulations.capitalizeFirstLetter(roles[0])}
+                    {StringManipulations.capitalizeFirstLetter(teamName)}
                 </Typography>
             </Box>
             <UploadImagePopup open={isUploadImageOpen} onClose={handleCloseUploadImage} />
