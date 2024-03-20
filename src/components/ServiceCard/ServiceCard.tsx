@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { Service } from "../../types";
 import classes from "./ServiceCard.module.css";
 
-const ServiceCard: FC<Service> = ({ name, url }) => {
+const ServiceCard: FC<Service> = ({ name, url, image_url }) => {
   const handleClick = () => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
     if (newWindow) newWindow.opener = null
@@ -21,7 +21,7 @@ const ServiceCard: FC<Service> = ({ name, url }) => {
       </Box>
       <Box className={classes.imageContainer}>
         <img
-          src={url}
+          src={image_url}
           alt={`${name} image`}
           className={classes.image}
         />

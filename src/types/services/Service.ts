@@ -2,7 +2,7 @@ type Service = {
     name: string;
     url: string;
     description?: string;
-    imageUrl?: string;
+    image_url?: string;
 }
 
 export default Service;

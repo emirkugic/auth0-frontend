@@ -32,7 +32,7 @@ const Dashboard = () => {
           {isLoading
             ? <Box className={classes.loading}> <CircularProgress size={24} /> </Box>
             : serviceData?.map((service: Service, index) => (
-              <ServiceCard name={service.name} url={service.url} key={index} />
+              <ServiceCard name={service.name} url={service.url} image_url={service.image_url} key={index} />
             ))}
         </Box>
       </Box>

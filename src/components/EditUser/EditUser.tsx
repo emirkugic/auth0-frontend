@@ -2,6 +2,7 @@ import {
     Avatar,
     Box,
     Button,
+    CircularProgress,
     FormControl,
     FormHelperText,
     IconButton,
@@ -20,7 +21,7 @@ import * as yup from "yup";
 
 import { EditUserProps } from "../../types";
 import { PopupType } from "../../enums";
-import { useSnackbar } from "../../hooks";
+import { useSnackbar, useUpdateUser } from "../../hooks";
 import { stringAvatar } from "../../utils";
 import classes from "./EditUser.module.css";
 
@@ -31,6 +32,8 @@ const EditUser: FC<EditUserProps> = ({
     fadeProps,
     isVisible,
 }) => {
+
+    const { mutate, isLoading } = useUpdateUser();
     const { showSnackbar } = useSnackbar();
 
     const validationSchema = yup.object({
@@ -51,7 +54,7 @@ const EditUser: FC<EditUserProps> = ({
         validationSchema: validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
-                console.log(values);
+                mutate({ userId: user?.id ?? 0, userData: { email: values.email, password: values.password, teamName: user?.teamName ?? '' } });
                 resetForm();
                 showSnackbar("Edited user successfully", "success");
             } catch (error) {
@@ -59,7 +62,7 @@ const EditUser: FC<EditUserProps> = ({
             } finally {
                 setSubmitting(false);
             }
-        },
+        }
     });
 
     const isFormTouched = Object.entries(formik.touched).some(
@@ -133,17 +136,17 @@ const EditUser: FC<EditUserProps> = ({
                                 className={classes["edit-user__input"]}
                                 error={formik.touched.role && Boolean(formik.errors.role)}
                             >
-                                <InputLabel id="role-select-label">Role</InputLabel>
+                                <InputLabel id="role-select-label">Team Name</InputLabel>
                                 <Select
                                     labelId="role-select-label"
                                     id="role-select"
                                     value={formik.values.role}
-                                    label="Role"
+                                    label="Team Name"
                                     onChange={handleChange}
                                     size="small"
                                 >
-                                    <MenuItem value={10}>Admin</MenuItem>
-                                    <MenuItem value={20}>Developer</MenuItem>
+                                    <MenuItem value={10}>OUTSOURCING</MenuItem>
+                                    <MenuItem value={20}>TECH</MenuItem>
                                     <MenuItem value={30}>HR</MenuItem>
                                 </Select>
                                 {formik.touched.role && Boolean(formik.errors.role)}
@@ -154,10 +157,13 @@ const EditUser: FC<EditUserProps> = ({
                                 type="submit"
                                 variant="contained"
                                 disabled={
-                                    !isFormTouched || Object.keys(formik.errors).length > 0
+                                    isLoading && !isFormTouched || Object.keys(formik.errors).length > 0
                                 }
                             >
-                                Save changes
+                                {isLoading
+                                    ? <CircularProgress size={24} color="inherit" />
+                                    : "Save changes"
+                                }
                             </Button>
                         </Box>
                     </Box>

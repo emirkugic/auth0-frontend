@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import { FC } from "react";
 import { useFormik } from "formik";
@@ -12,7 +12,7 @@ import classes from './GenerateUser.module.css';
 
 const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadeProps, isVisible }) => {
     const { showSnackbar } = useSnackbar();
-    const { mutate } = useGenerateAuthToken()
+    const { mutate, isLoading } = useGenerateAuthToken()
 
     const validationSchema = yup.object({
         email: yup.string().email("Invalid email address").required("Email is required"),
@@ -28,10 +28,10 @@ const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadePro
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
                 resetForm();
-                showSnackbar("Generated user successfully", "success");
+                showSnackbar("Sent user credentials successfully", "success");
                 mutate({ email: values.email, role: values.role })
             } catch (error) {
-                showSnackbar("Error generating user", "error");
+                showSnackbar("Error sending user credentials", "error");
             } finally {
                 setSubmitting(false);
             }
@@ -75,17 +75,17 @@ const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadePro
                             helperText={formik.touched.email && formik.errors.email}
                         />
                         <FormControl fullWidth size="small" className={classes['generate-user__input']} error={formik.touched.role && Boolean(formik.errors.role)}>
-                            <InputLabel id="role-select-label">Role</InputLabel>
+                            <InputLabel id="role-select-label">Team Name</InputLabel>
                             <Select
                                 labelId="role-select-label"
                                 id="role-select"
                                 value={formik.values.role}
-                                label="Role"
+                                label="Team Name"
                                 onChange={handleChange}
                                 size="small"
                             >
-                                <MenuItem value={10}>Admin</MenuItem>
-                                <MenuItem value={20}>Developer</MenuItem>
+                                <MenuItem value={10}>TECH</MenuItem>
+                                <MenuItem value={20}>OUTSOURCING</MenuItem>
                                 <MenuItem value={30}>HR</MenuItem>
                             </Select>
                             {formik.touched.role && Boolean(formik.errors.role)}
@@ -97,9 +97,12 @@ const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadePro
                             className={classes['generate-user__action']}
                             type="submit"
                             variant="contained"
-                            disabled={!isFormTouched || Object.keys(formik.errors).length > 0}
+                            disabled={isLoading && !isFormTouched || Object.keys(formik.errors).length > 0}
                         >
-                            Send
+                            {isLoading
+                                ? <CircularProgress size={24} color="inherit" />
+                                : "send"
+                            }
                         </Button>
                     </Box>
                 </Box>

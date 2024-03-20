@@ -38,7 +38,7 @@ const UserList = () => {
     }
 
     const fuzzySearch = (data: User[], query: string) => {
-        const fuse = new Fuse(data, { keys: ["firstName", "lastName", "email"] });
+        const fuse = new Fuse(data, { keys: ["firstName", "lastName", "email", "teamName"] });
         const result = fuse.search(query);
         return result.map(({ item }) => item);
     };
@@ -112,7 +112,8 @@ const UserList = () => {
                         <UserItem
                             key={user?.id}
                             user={user}
-                            handleEditButtonClick={handleEditButtonClick} />
+                            handleEditButtonClick={handleEditButtonClick}
+                        />
                     ))}
                 </Box>
             </Paper>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress } from '@mui/material';
-import { ReduxHooks, useUploadImage } from '../../hooks';
+import { ReduxHooks, useSnackbar, useUploadImage } from '../../hooks';
 import { selectUser } from '../../store/slice/userSlice';
 
 const UploadImagePopup = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
@@ -12,6 +12,7 @@ const UploadImagePopup = ({ open, onClose }: { open: boolean; onClose: () => voi
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const { mutate, isLoading } = useUploadImage();
+    const { showSnackbar } = useSnackbar()
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
@@ -36,8 +37,10 @@ const UploadImagePopup = ({ open, onClose }: { open: boolean; onClose: () => voi
             try {
                 mutate(formData);
                 onClose();
+                showSnackbar('Image successfully uploaded. Reload to see changes', 'success');
             } catch (error) {
                 console.error('Error uploading image:', error);
+                showSnackbar('Failed to upload image', 'error');
             }
 
         }

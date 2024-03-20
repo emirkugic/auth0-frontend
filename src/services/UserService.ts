@@ -17,9 +17,9 @@ const fetchAllUsersData = async (): Promise<User[]> => {
     }
 }
 
-const updateUser = async (userId: string): Promise<User[]> => {
+const updateUser = async (userId: number, userData: User): Promise<User[]> => {
     try {
-        return (await axiosInstance.patch(`/users/${userId}`)).data;
+        return (await axiosInstance.patch(`/users/${userId}`, userData)).data;
     } catch (error) {
         throw new Error('Failed to fetch user data');
     }

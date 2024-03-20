@@ -6,7 +6,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { FormDialogProps, FormValues } from '../types';
-import { ReduxHooks, useResetPassword } from '../hooks';
+import { ReduxHooks, useResetPassword, useSnackbar } from '../hooks';
 import { selectUser } from '../store/slice/userSlice';
 import { UserAction } from '../store';
 
@@ -22,6 +22,7 @@ const FormDialog: React.FC<FormDialogProps> = ({ open, onClose }) => {
     const { id } = user;
 
     const { mutate, isLoading } = useResetPassword();
+    const { showSnackbar } = useSnackbar()
 
     const validationSchema = yup.object({
         password: yup.string().required('Password is required'),
@@ -36,9 +37,10 @@ const FormDialog: React.FC<FormDialogProps> = ({ open, onClose }) => {
         validationSchema: validationSchema,
         onSubmit: async (values: FormValues) => {
             mutate({ password: values.password, confirmPassword: values.confirmPassword, userId: id ?? 0 })
-            await dispatch(UserAction.fetchUserData())
+            dispatch(UserAction.fetchUserData())
             onClose();
-            window.location.reload()
+            showSnackbar('Successfully changed password', 'success');
+            setTimeout(() => window.location.reload(), 500);
         },
     });
 

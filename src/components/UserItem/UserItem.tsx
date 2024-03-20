@@ -14,10 +14,6 @@ const UserItem: FC<UserItemProps> = ({ user, handleEditButtonClick }) => {
         window.open(`mailto:${user.email}`);
     };
 
-    useEffect(() => {
-        console.log(user.imageUrl)
-    }, [])
-
     return (
         <Box key={user.id} className={classes['user-list__content']}>
             <Box className={classes['user-list__user-info']}>
@@ -31,6 +27,11 @@ const UserItem: FC<UserItemProps> = ({ user, handleEditButtonClick }) => {
                     <Typography
                         className={classes['user-list__user-name']}>
                         {`${user.firstName} ${user.lastName}`}
+                    </Typography>
+                    <Typography
+                        className={classes['user-list__user-team-name']}
+                    >
+                        {user.teamName}
                     </Typography>
                     <Typography
                         className={classes['user-list__user-email']}
