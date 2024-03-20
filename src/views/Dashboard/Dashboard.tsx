@@ -17,7 +17,7 @@ const Dashboard = () => {
   if (!user) return null;
 
   const { teamName } = user;
-  const { data: serviceData, isLoading } = useService(teamName);
+  const { data: serviceData, isLoading } = useService(teamName ?? '');
 
   useEffect(() => {
     setShowPasswordChangeDialog(user?.isFirstTimeLogin ?? false)

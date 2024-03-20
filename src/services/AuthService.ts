@@ -114,7 +114,7 @@ const resetPassword = async (password: string, confirmPassword: string, userId: 
 
 const generateAuthToken = async (email: string, role: string) => {
     try {
-        return (await axiosInstance.post('auth/generate-auth-token', { email, role })).data;
+        return (await axiosInstance.get('auth/generate-auth-token', { params: { email, role } })).data;
     } catch (error) {
         console.error('Generate Auth Token Error:', error);
         throw new Error('Failed to generate auth token.');

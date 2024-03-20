@@ -84,9 +84,9 @@ const GenerateUser: FC<GenerateUserProps> = ({ setShowPopup, setVisible, fadePro
                                 onChange={handleChange}
                                 size="small"
                             >
-                                <MenuItem value={10}>TECH</MenuItem>
-                                <MenuItem value={20}>OUTSOURCING</MenuItem>
-                                <MenuItem value={30}>HR</MenuItem>
+                                <MenuItem value="TECH">TECH</MenuItem>
+                                <MenuItem value="OUTSOURCING">OUTSOURCING</MenuItem>
+                                <MenuItem value="HR">HR</MenuItem>
                             </Select>
                             {formik.touched.role && Boolean(formik.errors.role)}
                             <FormHelperText error>

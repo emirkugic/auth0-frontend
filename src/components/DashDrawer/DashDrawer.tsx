@@ -23,14 +23,11 @@ import classes from "./DashDrawer.module.css";
 
 const DashDrawer = () => {
   const [open, setOpen] = useState(false);
-  const [expandedAccordion, setExpandedAccordion] = useState<string | false>(
-    false
-  );
+  const [expandedAccordion, setExpandedAccordion] = useState<string | false>(false);
   const drawerRef = useRef<HTMLDivElement>(null);
 
   const user = ReduxHooks.useAppSelector(selectUser)
   if (!user) return null;
-
 
   const { data } = useTasks(user.id ?? 0);
 

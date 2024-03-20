@@ -8,7 +8,7 @@ type User = {
     email: string
     roles?: string[],
     isFirstTimeLogin?: boolean,
-    teamName: string,
+    teamName?: string,
     imageUrl?: string
 }
 
