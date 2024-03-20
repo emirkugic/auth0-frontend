@@ -28,12 +28,13 @@ const UploadImagePopup = ({ open, onClose }: { open: boolean; onClose: () => voi
     };
 
     const handleUploadClick = async () => {
-        if (selectedFile) {
+        if (selectedFile && id !== undefined) {
             const formData = new FormData();
             formData.append('image', selectedFile);
+            formData.append('user_id', id.toString());
 
             try {
-                mutate({ formData, userId: id ?? 0 });
+                mutate(formData);
                 onClose();
             } catch (error) {
                 console.error('Error uploading image:', error);

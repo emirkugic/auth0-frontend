@@ -1,18 +1,14 @@
 import { axiosInstance } from '../config';
 import { Image } from '../types';
 
-const uploadImage = async (formData: FormData, user_id: number): Promise<Image> => {
-    console.log(formData)
-
+const uploadImage = async (formData: FormData): Promise<Image> => {
     try {
-        const response = await axiosInstance.post(`/images/${user_id}`, formData, {
+        const response = await axiosInstance.post(`/images`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
-            transformRequest: formData => formData,
         })
 
         return response.data
     } catch (error) {
-        console.log(error)
         throw new Error('Failed to upload image');
     }
 };
