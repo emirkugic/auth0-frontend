@@ -17,7 +17,7 @@ import { selectUser } from "../../store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
 
-function ResponsiveAppBar() {
+const ResponsiveAppBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
