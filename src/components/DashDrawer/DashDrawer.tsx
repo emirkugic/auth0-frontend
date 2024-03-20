@@ -29,7 +29,9 @@ const DashDrawer = () => {
   const user = ReduxHooks.useAppSelector(selectUser)
   if (!user) return null;
 
-  const { data } = useTasks(user.id ?? 0);
+  const { teamName } = user;
+
+  const { data } = useTasks(teamName ?? '');
 
   useEffect(() => {
     console.log(data)
@@ -72,7 +74,7 @@ const DashDrawer = () => {
           variant="h6"
           className={classes["container__drawer__title-text"]}
         >
-          Tasks
+          Information
         </Typography>
       </Box>
       <List>
