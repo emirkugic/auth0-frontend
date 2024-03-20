@@ -7,8 +7,13 @@ import { Service } from "../../types";
 import classes from "./ServiceCard.module.css";
 
 const ServiceCard: FC<Service> = ({ name, url }) => {
+  const handleClick = () => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null
+  }
+
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} onClick={handleClick}>
       <Box className={classes.overlay}>
         <Typography variant="h6" textAlign="center">
           {name}

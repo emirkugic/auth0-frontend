@@ -7,8 +7,8 @@ import { ServiceCard } from "../../components/ServiceCard";
 import { ReduxHooks, useService } from "../../hooks";
 import { selectUser } from "../../store/slice/userSlice";
 import { FormDialog } from "../../UI";
-import classes from "./Dashboard.module.css";
 import { Service } from "../../types";
+import classes from "./Dashboard.module.css";
 
 const Dashboard = () => {
   const [showPasswordChangeDialog, setShowPasswordChangeDialog] = useState<boolean>(false);
