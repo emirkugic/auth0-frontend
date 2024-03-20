@@ -8,12 +8,12 @@ import { UserService } from '../../services';
 const fetchUserData = (): AppThunk => {
     return async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
         try {
-            dispatch(setLoading(true));
+            await dispatch(setLoading(true));
 
             const userData = await UserService.fetchUserData();
 
-            dispatch(setUser(userData));
-            dispatch(setLoading(false));
+            await dispatch(setUser(userData));
+            await dispatch(setLoading(false));
         } catch (error) {
             dispatch(setLoading(false));
 

@@ -8,6 +8,7 @@ export type { default as GenerateUserProps } from './forms/GenerateUserProps'
 export type { default as AppThunkDispatch } from "./store/AppThunkDispatch";
 export type { default as SnackbarState } from "./snackbar/SnackbarState";
 export type { default as HeaderMenuProps } from "./ui/HeaderMenuProps";
+export type { default as FormDialogProps } from "./ui/FormDialogProps";
 export type { default as RegisterFormProps } from "./forms/FormProps";
 export type { default as EditUserProps } from "./forms/EditUserProps";
 export type { default as UserItemProps } from "./user/UserItemProps";
@@ -15,6 +16,7 @@ export type { default as FadeProps } from "./routes/hooks/FadeProps";
 export type { default as LoginFormProps } from "./forms/FormProps";
 export type { default as AuthState } from "./store/AuthState";
 export type { default as RootState } from "./store/RootState";
+export type { default as FormValues } from "./ui/FormValues"
 export type { default as Service } from "./services/Service";
 export type { default as AppThunk } from "./store/AppThunk";
 export type { default as UserState } from "./user/UserState"

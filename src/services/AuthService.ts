@@ -101,23 +101,10 @@ const forgotPassword = async (email: string) => {
     }
 };
 
-const validateResetCode = async (email: string, resetCode: number) => {
-    try {
-        return (await axiosInstance.post('auth/validateResetCode', { email, reset_code: resetCode })).data;
-    } catch (error) {
-        console.error('Validate Reset Code Error:', error);
-        throw new Error('Failed to validate reset code.');
-    }
-};
-
-const resetPassword = async (password: string, confirmPassword: string, resetToken: string) => {
+const resetPassword = async (password: string, confirmPassword: string, userId: number) => {
     try {
         return (
-            await axiosInstance.post('auth/resetPassword', { password, password_confirmation: confirmPassword }, {
-                headers: {
-                    Authorization: `Bearer ${resetToken}`
-                }
-            })
+            await axiosInstance.post(`auth/reset-password/${userId}`, { password, password_confirmation: confirmPassword })
         ).data;
     } catch (error) {
         console.error('Reset Password Error:', error);
@@ -127,7 +114,7 @@ const resetPassword = async (password: string, confirmPassword: string, resetTok
 
 const generateAuthToken = async (email: string, role: string) => {
     try {
-        return (await axiosInstance.post('auth/generateAuthToken', { email, role })).data;
+        return (await axiosInstance.post('auth/generate-auth-token', { email, role })).data;
     } catch (error) {
         console.error('Generate Auth Token Error:', error);
         throw new Error('Failed to generate auth token.');
@@ -144,6 +131,6 @@ const decodeToken = (token: string) => {
     }
 };
 
-export default { login, register, logout, decodeToken, validateToken, me, refresh, forgotPassword, validateResetCode, resetPassword, generateAuthToken };
+export default { login, register, logout, decodeToken, validateToken, me, refresh, forgotPassword, resetPassword, generateAuthToken };
 
 

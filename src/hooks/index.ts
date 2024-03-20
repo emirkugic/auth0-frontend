@@ -1,3 +1,4 @@
+export { default as useResetPassword } from "./useResetPassword";
 export { default as useUploadImage } from "./useUploadImage"
 export { default as useImageByUser } from "./useImageByUser"
 export { default as useSnackbar } from "./useSnackbar";
