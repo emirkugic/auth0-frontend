@@ -2,10 +2,10 @@ import { useQuery } from "react-query";
 
 import { TaskService } from "../services";
 
-const useTasks = () => {
+const useTasks = (teamName: string) => {
     return useQuery(
         ["tasks"],
-        () => TaskService.fetchTasksData(),
+        () => TaskService.fetchTasksByUserId(teamName),
     )
 }
 

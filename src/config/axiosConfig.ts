@@ -1,11 +1,14 @@
 import axios from 'axios';
 
-import { selectAccessToken, setIsAuthenticated, store } from '../store';
+import { selectAccessToken, setIsAuthenticated, setTokens, store } from '../store';
 import { AuthService } from '../services';
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_BE_BASE_URL,
-    timeout: 1000,
+    timeout: 3000,
+    headers: {
+        'Accept': 'application/json',
+    },
 });
 
 instance.interceptors.request.use(
@@ -23,6 +26,7 @@ instance.interceptors.request.use(
                 store.dispatch(setIsAuthenticated(true));
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
             } catch (error) {
+                store.dispatch(setTokens({ access_token: null, refreshToken: null }));
                 store.dispatch(setIsAuthenticated(false));
                 console.error('Token validation failed:', error);
                 throw error;

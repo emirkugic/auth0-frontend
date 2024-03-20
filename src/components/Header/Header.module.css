@@ -15,7 +15,11 @@
 }
 
 .app-bar__logo img {
-  height: 1.5rem;
+  height: 2.2vw;
+}
+
+.app-bar__logo img:hover {
+  cursor: pointer;
 }
 
 .app-bar__avatar {

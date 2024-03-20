@@ -1,0 +1,53 @@
+.user-list__content {
+    width: 95%;
+    display: flex;
+    margin-top: 1rem;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-list__user-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-list__avatar {
+    margin-right: 1.5rem;
+    width: 3.8rem;
+    height: 3.8rem;
+}
+
+.user-list__user-name {
+    font-family: 'Inter';
+    font-size: 1.2rem;
+}
+
+.user-list__user-team-name {
+    font-family: 'Inter';
+    font-size: .9rem;
+}
+
+.user-list__user-email {
+    color: var(--primary-color-500);
+    font-size: .9rem;
+}
+
+.user-list__user-email:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.user-list__edit-action {
+    height: 3.5rem;
+    width: 2.5rem;
+    min-width: 2.5rem;
+}
+
+.user-list__edit-icon {
+    font-size: 1rem;
+}

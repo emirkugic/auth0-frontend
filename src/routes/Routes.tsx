@@ -11,6 +11,7 @@ import { Dashboard } from "../views/Dashboard";
 import { ProtectedRouteProps } from "../types";
 import ProtectedRoute from "./ProtectedRoute";
 import { ReduxHooks } from "../hooks";
+import { AdminPanel } from "../views/AdminPanel";
 
 const Routes = () => {
   const isAuthenticated = ReduxHooks.useAppSelector(selectIsAuthenticated);
@@ -30,8 +31,8 @@ const Routes = () => {
       element: <ProtectedRoute {...defaultProtectedRouteProps} outlet={<Dashboard />} />,
     },
     {
-      path: "/forgot-password",
-      element: <h1>Forgot Password</h1>,
+      path: "/admin-panel",
+      element: <ProtectedRoute {...defaultProtectedRouteProps} outlet={<AdminPanel />} />,
     },
     {
       path: "*",

@@ -5,31 +5,38 @@ import Tooltip from "@mui/material/Tooltip";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import { MouseEvent } from "react";
 
-import skimLogoDark from "../../assets/logos/CompanyLogo/skim-dark.svg";
-import classes from "./Header.module.css";
+import auth0LogoDark from "../../assets/logos/authLogo/auth0-dark.svg";
 import { useState } from "react";
 import { HeaderMenu } from '../HeaderMenu';
 import { Typography } from '@mui/material';
 import { stringAvatar } from "../../utils";
 import { ReduxHooks } from "../../hooks";
 import { selectUser } from "../../store/slice/userSlice";
+import { useNavigate } from "react-router-dom";
+import classes from "./Header.module.css";
 
-function ResponsiveAppBar() {
+const ResponsiveAppBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
 
   const user = ReduxHooks.useAppSelector(selectUser)
   if (!user) return null;
 
-  const { firstName, lastName } = user;
+  const { firstName, lastName, imageUrl } = user;
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
   };
 
   return (
@@ -41,7 +48,7 @@ function ResponsiveAppBar() {
       >
         <Toolbar disableGutters>
           <Box className={classes["app-bar__logo"]}>
-            <img src={skimLogoDark} alt="Skim Technologies Logo" />
+            <img src={auth0LogoDark} alt="Skim Technologies Logo" onClick={handleLogoClick} />
           </Box>
 
           <Box className={classes["app-bar__avatar"]}>
@@ -49,7 +56,7 @@ function ResponsiveAppBar() {
               <IconButton sx={{ p: 0 }} onClick={handleClick}>
                 <Avatar
                   alt={`${firstName} ${lastName}`}
-                  src="https://images.mubicdn.net/images/cast_member/830947/cache-738230-1638187722/image-w856.jpg?size=800x"
+                  src={imageUrl?.concat('.jpg')}
                   {...stringAvatar(`${firstName} ${lastName}`)}
                 />
               </IconButton>

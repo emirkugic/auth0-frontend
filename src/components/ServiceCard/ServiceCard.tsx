@@ -1,44 +1,31 @@
+import { FC } from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
 
-import teamsLogo from "../../assets/logos/serviceCard/teams.png";
-import workplaceLogo from "../../assets/logos/serviceCard/workplace.png";
-import listifyLogo from "../../assets/logos/serviceCard/listify.png";
+import { Service } from "../../types";
 import classes from "./ServiceCard.module.css";
 
-const ServiceCard = () => {
-  const imageUrls = [
-    {
-      src: teamsLogo,
-      alt: "MS Teams",
-    },
-    {
-      src: workplaceLogo,
-      alt: "Workplace",
-    },
-    {
-      src: listifyLogo,
-      alt: "Listify",
-    },
-  ];
-
-  const random =
-    imageUrls[Math.floor(Math.random() * imageUrls.length)];
+const ServiceCard: FC<Service> = ({ name, url, image_url }) => {
+  const handleClick = () => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null
+  }
 
   return (
-    <Card className={classes.card}>
-      <div className={classes.overlay}>
+    <Card className={classes.card} onClick={handleClick}>
+      <Box className={classes.overlay}>
         <Typography variant="h6" textAlign="center">
-          {random.alt}
+          {name}
         </Typography>
-      </div>
-      <div className={classes.imageContainer}>
+      </Box>
+      <Box className={classes.imageContainer}>
         <img
-          src={random.src}
-          alt="Service Card Image"
+          src={image_url}
+          alt={`${name} image`}
           className={classes.image}
         />
-      </div>
+      </Box>
     </Card>
   );
 };

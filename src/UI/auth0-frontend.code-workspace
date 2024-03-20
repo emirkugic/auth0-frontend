@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../../PHPprojects/auth0-backend"
+		}
+	],
+	"settings": {}
+}

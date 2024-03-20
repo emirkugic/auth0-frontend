@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -55,7 +55,7 @@ const RegisterForm = () => {
     authKey: yup
       .string()
       .required("Auth Key is required")
-      .matches(/^[0-9]{6}$/, "Auth Key must be a 6-digit number"),
+      .matches(/^[0-9a-zA-Z"|,.<>?]{60}$/, "Auth Key must be 60 characters consisting of digits, letters, or special characters")
   });
 
   const formik = useFormik({
@@ -71,15 +71,18 @@ const RegisterForm = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setIsLoading(true);
-      const formattedDateOfBirth = values.dateOfBirth?.["$d"] ? format(values.dateOfBirth["$d"], 'yyyy-MM-dd') : null;
+      const formattedDateOfBirth = values.dateOfBirth?.["$d"] ? format(values.dateOfBirth["$d"], 'yyyy-MM-dd') : undefined;
 
       const formattedValues = {
         first_name: values.firstName,
         last_name: values.lastName,
         email: values.email,
         password: values.password,
-        date_of_birth: formattedDateOfBirth,
+        dateofbirth: formattedDateOfBirth,
+        auth_token: values.authKey
       };
+
+      console.log(formattedValues)
 
       dispatch(AuthAction.register(formattedValues));
       setIsLoading(false);
@@ -96,7 +99,7 @@ const RegisterForm = () => {
   const handleClickShowAuthKey = () => setShowAuthKey((show) => !show);
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };

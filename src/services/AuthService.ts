@@ -1,4 +1,5 @@
 import { ThunkDispatch } from "redux-thunk";
+import { jwtDecode } from "jwt-decode";
 import { Action } from "redux";
 import axios from "axios";
 
@@ -9,7 +10,7 @@ import { axiosInstance } from "../config";
 const login = async (
     loginData: User | undefined,
     dispatch: ThunkDispatch<RootState, unknown, Action>
-) => {
+): Promise<void> => {
     try {
         const {
             data: { access_token },
@@ -29,7 +30,7 @@ const login = async (
 
 const register = async (registerData: User) => {
     try {
-        await axiosInstance.post('auth/register', registerData);
+        await axios.post(`${import.meta.env.VITE_BE_BASE_URL}auth/register`, registerData);
 
         return Promise.resolve();
     } catch (error: any) {
@@ -55,18 +56,12 @@ const logout = async (dispatch: ThunkDispatch<RootState, unknown, Action>) => {
     }
 }
 
-const validateToken = async (accessToken: string | null) => {
+const validateToken = async (accessToken: string) => {
     try {
-        if (accessToken) {
-            const response = await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate`, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            });
+        const response = await axios.get(`${import.meta.env.VITE_BE_BASE_URL}auth/validate/${accessToken}`);
 
-            if (response.data.message === true) {
-                return true;
-            }
+        if (response.data.message === true) {
+            return true;
         }
         return false;
     } catch (error) {
@@ -75,4 +70,67 @@ const validateToken = async (accessToken: string | null) => {
     }
 };
 
-export default { login, register, logout, validateToken };
+const me = async () => {
+    try {
+        const response = await axiosInstance.post('auth/me')
+
+        return response;
+    } catch (error) {
+        console.error('Failed to fetch user information:', error);
+        return false;
+    }
+};
+
+const refresh = async () => {
+    try {
+        const response = (await axiosInstance.post('auth/refresh')).data
+
+        return response
+    } catch (error) {
+        console.error('Failed to refresh token:', error);
+        return false;
+    }
+};
+
+const forgotPassword = async (email: string) => {
+    try {
+        return (await axiosInstance.post('auth/forgotPassword', { email })).data;
+    } catch (error) {
+        console.error('Forgot Password Error:', error);
+        throw new Error('Forgot password request failed.');
+    }
+};
+
+const resetPassword = async (password: string, confirmPassword: string, userId: number) => {
+    try {
+        return (
+            await axiosInstance.post(`auth/reset-password/${userId}`, { password, password_confirmation: confirmPassword })
+        ).data;
+    } catch (error) {
+        console.error('Reset Password Error:', error);
+        throw new Error('Failed to reset password.');
+    }
+};
+
+const generateAuthToken = async (email: string, role: string) => {
+    try {
+        return (await axiosInstance.get('auth/generate-auth-token', { params: { email, role } })).data;
+    } catch (error) {
+        console.error('Generate Auth Token Error:', error);
+        throw new Error('Failed to generate auth token.');
+    }
+};
+
+const decodeToken = (token: string) => {
+    try {
+        const decoded = jwtDecode(token);
+        return decoded;
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+    }
+};
+
+export default { login, register, logout, decodeToken, validateToken, me, refresh, forgotPassword, resetPassword, generateAuthToken };
+
+

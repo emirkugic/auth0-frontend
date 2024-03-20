@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import "@fontsource/roboto/500.css";
 
-import { UserAction, selectAccessToken, setIsAuthenticated } from "./store";
+import { UserAction, selectAccessToken, setIsAuthenticated, setTokens } from "./store";
 import { AuthService } from "./services";
 import { ReduxHooks, useSnackbar } from "./hooks";
 import { Routes } from "./routes";
@@ -19,10 +19,11 @@ const App = () => {
         dispatch(setIsAuthenticated(true));
         dispatch(UserAction.fetchUserData());
       } else {
+        dispatch(setTokens({ access_token: null, refreshToken: null }));
         dispatch(setIsAuthenticated(false));
       }
     }
-  }, [accessToken, dispatch]);
+  }, [dispatch, accessToken]);
 
   useEffect(() => {
     checkIfTokenIsValid();
